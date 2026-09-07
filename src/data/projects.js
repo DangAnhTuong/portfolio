@@ -59,7 +59,7 @@ export const PROJECTS = [
       devops: "Docker Compose, Nginx Reverse Proxy, Linux VPS"
     },
     github: "https://github.com/DangAnhTuong/ai-english-learning-platform",
-    demo: "https://github.com/DangAnhTuong/ai-english-learning-platform",
+    demo: "https://ai-english-learning-platform.vercel.app",
     badgeColor: "#10b981",
     gradient: "linear-gradient(135deg, #059669 0%, #10b981 100%)"
   },
@@ -85,7 +85,7 @@ export const PROJECTS = [
       deployment: "Netlify Continuous Deployment (CI/CD)"
     },
     github: "https://github.com/DangAnhTuong/tuong-hotel",
-    demo: "https://github.com/DangAnhTuong/tuong-hotel",
+    demo: "https://tuong-hotel.vercel.app",
     badgeColor: "#0ea5e9",
     gradient: "linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%)"
   },
@@ -112,7 +112,7 @@ export const PROJECTS = [
       devops: "Docker Compose All-in-One, Nginx Reverse Proxy"
     },
     github: "https://github.com/DangAnhTuong/event_ticketing_platform-",
-    demo: "https://github.com/DangAnhTuong/event_ticketing_platform-",
+    demo: "https://event-ticketing-platform-omega.vercel.app",
     badgeColor: "#6366f1",
     gradient: "linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)"
   },
@@ -139,7 +139,7 @@ export const PROJECTS = [
       dashboard: "Streamlit Community Cloud"
     },
     github: "https://github.com/DangAnhTuong/Olist-Ecommerce-Analytics-End-to-End",
-    demo: "https://github.com/DangAnhTuong/Olist-Ecommerce-Analytics-End-to-End",
+    demo: "/Olist_Analytics_Report.pdf",
     badgeColor: "#f59e0b",
     gradient: "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)"
   }
