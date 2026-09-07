@@ -59,7 +59,7 @@ export const PROJECTS = [
       devops: "Docker Compose, Nginx Reverse Proxy, Linux VPS"
     },
     github: "https://github.com/DangAnhTuong/ai-english-learning-platform",
-    demo: "https://ai-english-learning-platform.vercel.app",
+    demo: "https://english.danganhtuong.dev",
     badgeColor: "#10b981",
     gradient: "linear-gradient(135deg, #059669 0%, #10b981 100%)"
   },
