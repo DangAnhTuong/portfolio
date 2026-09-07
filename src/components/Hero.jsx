@@ -1,160 +1,67 @@
-import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Sparkles, Layers, Cpu, Database, Cloud } from 'lucide-react';
+import React from 'react';
+import { ArrowRight, MapPin, Sparkles, FileText, Code2, Layers, Cpu } from 'lucide-react';
 import { PROFILE } from '../data/projects';
 
 export default function Hero() {
-  const canvasRef = useRef(null);
-
-  // Interactive Cyber Constellation Canvas
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let animationFrameId;
-
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
-
-    const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-    window.addEventListener('resize', handleResize);
-
-    // Particle nodes
-    const particleCount = Math.min(Math.floor(window.innerWidth / 18), 70);
-    const particles = [];
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-        radius: Math.random() * 2 + 1,
-        color: Math.random() > 0.5 ? '#00f2fe' : '#6366f1'
-      });
-    }
-
-    let mouse = { x: -1000, y: -1000 };
-    const handleMouseMove = (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      // Draw and update particles
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
-
-        // Interaction with mouse
-        const dx = mouse.x - p.x;
-        const dy = mouse.y - p.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
-          p.x -= (dx / dist) * 1.5;
-          p.y -= (dy / dist) * 1.5;
-        }
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = p.color;
-        ctx.fill();
-
-        // Connect nearby particles
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dxx = p.x - p2.x;
-          const dyy = p.y - p2.y;
-          const distance = Math.sqrt(dxx * dxx + dyy * dyy);
-
-          if (distance < 110) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(99, 102, 241, ${0.2 * (1 - distance / 110)})`;
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
-          }
-        }
-      }
-
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
-
   return (
-    <section id="hero" className="hero-section">
-      <canvas ref={canvasRef} className="hero-canvas" />
-
+    <section id="home" className="hero-section">
       <div className="container hero-container">
-        {/* Status Pill */}
-        <div className="status-pill glass-panel">
-          <div className="pulse-dot" />
-          <span>{PROFILE.status}</span>
+        {/* Top Badges (Matching reference layout) */}
+        <div className="badge-row">
+          <div className="signature-pill">
+            <Sparkles size={14} color="var(--accent-cyan)" />
+            <span>Signature Focus · Real-Time AI & 3D Web</span>
+          </div>
+
+          <div className="location-pill">
+            <MapPin size={14} color="var(--accent-indigo)" />
+            <span>{PROFILE.location}</span>
+          </div>
         </div>
 
-        {/* Headline */}
-        <h1 className="hero-title">
-          Xin chào, tôi là <br />
-          <span className="text-gradient-tricolor">{PROFILE.name}</span>
-        </h1>
+        {/* Large Name */}
+        <h1 className="hero-name">{PROFILE.name}</h1>
 
-        {/* Subtitle */}
-        <p className="hero-subtitle">
+        {/* Prominent Subtitle */}
+        <h2 className="hero-title text-gradient">
           {PROFILE.title}
+        </h2>
+
+        {/* Authentic CV Summary */}
+        <p className="hero-summary">
+          {PROFILE.summary}
         </p>
 
-        {/* Bio paragraph */}
-        <p className="hero-bio">
-          Chuyên gia phát triển hệ thống chịu tải cao (<strong>High Concurrency</strong>), trải nghiệm tương tác <strong>3D WebGL (Three.js)</strong> và tích hợp các pipeline <strong>AI/Machine Learning</strong> thực chiến. Tối ưu hóa 100% chi phí hạ tầng với kiến trúc đám mây Serverless không độ trễ.
-        </p>
-
-        {/* Tech Stack Pills */}
-        <div className="hero-tech-pills">
-          <span className="tech-pill"><Layers size={14} /> Next.js 19 & React</span>
-          <span className="tech-pill"><Cpu size={14} /> NestJS & Python AI</span>
-          <span className="tech-pill"><Database size={14} /> PostgreSQL & Redis</span>
-          <span className="tech-pill"><Cloud size={14} /> 100% Free Cloud Tiers</span>
+        {/* Highlighted Tech Pills */}
+        <div className="tech-tags-cloud">
+          <span className="tech-tag"><Layers size={13} /> React 19 & Next.js</span>
+          <span className="tech-tag"><Code2 size={13} /> Three.js (@react-three/fiber)</span>
+          <span className="tech-tag"><Cpu size={13} /> Node.js & Python FastAPI</span>
+          <span className="tech-tag"><Sparkles size={13} /> AI-Assisted Workflows (Antigravity & Claude Code)</span>
         </div>
 
-        {/* Call to Actions */}
+        {/* Action Buttons */}
         <div className="hero-actions">
-          <a href="#projects" className="btn btn-primary">
-            <span>Khám Phá Dự Án Thực Chiến</span>
-            <ArrowRight size={18} />
+          <a href="#contact" className="btn btn-primary">
+            <span>Get In Touch</span>
+            <ArrowRight size={16} />
           </a>
 
-          <a href="#cloud-architecture" className="btn btn-secondary">
-            <Sparkles size={16} color="var(--accent-cyan)" />
-            <span>Mô Hình Cloud 0 VNĐ</span>
+          <a href="#projects" className="btn btn-secondary">
+            <span>View Projects</span>
+          </a>
+
+          <a href="#about" className="btn btn-secondary">
+            <span>About Me</span>
           </a>
         </div>
 
-        {/* Stats Grid */}
+        {/* Stats / Academic Facts Grid */}
         <div className="hero-stats-grid">
           {PROFILE.stats.map((stat, idx) => (
             <div key={idx} className="stat-card glass-panel">
-              <span className="stat-value text-gradient">{stat.value}</span>
-              <span className="stat-label">{stat.label}</span>
+              <span className="stat-val text-gradient">{stat.value}</span>
+              <span className="stat-lbl">{stat.label}</span>
             </div>
           ))}
         </div>
@@ -163,115 +70,110 @@ export default function Hero() {
       <style>{`
         .hero-section {
           position: relative;
-          min-height: 100vh;
+          min-height: 90vh;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 130px 0 70px;
-          overflow: hidden;
-        }
-
-        .hero-canvas {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 0;
-          pointer-events: none;
+          padding: 135px 0 65px;
         }
 
         .hero-container {
-          position: relative;
-          z-index: 1;
           display: flex;
           flex-direction: column;
           align-items: center;
           text-align: center;
+          max-width: 920px;
         }
 
-        .status-pill {
+        .badge-row {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin-bottom: 24px;
+        }
+
+        .signature-pill, .location-pill {
           display: inline-flex;
           align-items: center;
-          gap: 10px;
-          padding: 8px 18px;
+          gap: 8px;
+          padding: 6px 16px;
           border-radius: var(--radius-full);
           font-family: var(--font-mono);
-          font-size: 0.84rem;
+          font-size: 0.8rem;
+          font-weight: 600;
+          background: var(--badge-bg);
+          border: 1px solid var(--badge-border);
           color: var(--text-primary);
-          margin-bottom: 28px;
-          border-color: rgba(16, 185, 129, 0.3);
-          background: rgba(16, 185, 129, 0.06);
+        }
+
+        .signature-pill {
+          border-color: rgba(14, 165, 233, 0.3);
+        }
+
+        .hero-name {
+          font-size: 3.8rem;
+          font-weight: 800;
+          letter-spacing: -0.03em;
+          line-height: 1.15;
+          margin-bottom: 12px;
+          color: var(--text-primary);
         }
 
         .hero-title {
-          font-size: 4rem;
-          line-height: 1.15;
-          font-weight: 800;
-          letter-spacing: -0.03em;
-          margin-bottom: 18px;
-        }
-
-        .hero-subtitle {
-          font-family: var(--font-heading);
-          font-size: 1.4rem;
-          font-weight: 600;
-          color: var(--text-secondary);
-          margin-bottom: 22px;
+          font-size: 1.6rem;
+          font-weight: 700;
           letter-spacing: -0.01em;
+          margin-bottom: 22px;
         }
 
-        .hero-bio {
-          font-size: 1.12rem;
-          color: #94a3b8;
-          max-width: 740px;
-          line-height: 1.7;
-          margin-bottom: 32px;
+        .hero-summary {
+          font-size: 1.08rem;
+          color: var(--text-secondary);
+          line-height: 1.75;
+          max-width: 780px;
+          margin-bottom: 30px;
         }
 
-        .hero-bio strong {
-          color: var(--text-primary);
-          font-weight: 600;
-        }
-
-        .hero-tech-pills {
+        .tech-tags-cloud {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
-          gap: 10px;
+          gap: 9px;
           margin-bottom: 36px;
         }
 
-        .tech-pill {
+        .tech-tag {
           display: inline-flex;
           align-items: center;
           gap: 6px;
           padding: 6px 14px;
           border-radius: var(--radius-full);
           font-family: var(--font-mono);
-          font-size: 0.8rem;
-          background: rgba(255, 255, 255, 0.03);
+          font-size: 0.82rem;
+          background: var(--badge-bg);
           border: 1px solid var(--border-subtle);
-          color: #cbd5e1;
+          color: var(--text-secondary);
         }
 
         .hero-actions {
           display: flex;
           align-items: center;
-          gap: 16px;
-          margin-bottom: 56px;
+          justify-content: center;
+          gap: 14px;
+          margin-bottom: 50px;
         }
 
         .hero-stats-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 18px;
+          gap: 16px;
           width: 100%;
-          max-width: 960px;
         }
 
         .stat-card {
-          padding: 20px;
+          padding: 16px 14px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -279,24 +181,26 @@ export default function Hero() {
           border-radius: var(--radius-md);
         }
 
-        .stat-value {
+        .stat-val {
           font-family: var(--font-heading);
-          font-size: 1.8rem;
-          font-weight: 800;
+          font-size: 1.02rem;
+          font-weight: 700;
+          text-align: center;
         }
 
-        .stat-label {
-          font-size: 0.82rem;
+        .stat-lbl {
+          font-family: var(--font-mono);
+          font-size: 0.74rem;
           color: var(--text-muted);
-          font-weight: 500;
+          text-align: center;
         }
 
-        @media (max-width: 860px) {
-          .hero-title {
-            font-size: 2.8rem;
+        @media (max-width: 768px) {
+          .hero-name {
+            font-size: 2.6rem;
           }
-          .hero-subtitle {
-            font-size: 1.15rem;
+          .hero-title {
+            font-size: 1.25rem;
           }
           .hero-actions {
             flex-direction: column;

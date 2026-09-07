@@ -1,35 +1,38 @@
 import React from 'react';
-import { Layout, Server, Database, Cpu } from 'lucide-react';
-import { SKILLS_DATA } from '../data/projects';
+import { Layout, Server, Code, Database, Cpu, Cloud, Globe } from 'lucide-react';
+import { SKILLS_COMPETENCIES } from '../data/projects';
 
 export default function SkillsMatrix() {
-  const getIcon = (name) => {
-    switch (name) {
-      case 'Layout': return <Layout size={20} color="var(--accent-cyan)" />;
-      case 'Server': return <Server size={20} color="var(--accent-indigo)" />;
-      case 'Database': return <Database size={20} color="var(--accent-emerald)" />;
-      case 'Cpu': return <Cpu size={20} color="var(--accent-pink)" />;
-      default: return <Server size={20} />;
+  const getIcon = (iconName) => {
+    switch (iconName) {
+      case 'Layout': return <Layout size={18} color="var(--accent-cyan)" />;
+      case 'Server': return <Server size={18} color="var(--accent-indigo)" />;
+      case 'Code': return <Code size={18} color="var(--accent-purple)" />;
+      case 'Database': return <Database size={18} color="var(--accent-emerald)" />;
+      case 'Cpu': return <Cpu size={18} color="#ec4899" />;
+      case 'Cloud': return <Cloud size={18} color="var(--accent-amber)" />;
+      case 'Globe': return <Globe size={18} color="var(--accent-cyan)" />;
+      default: return <Code size={18} />;
     }
   };
 
   return (
     <section id="skills" className="skills-section">
       <div className="container">
-        {/* Header */}
+        {/* Section Header */}
         <div className="section-header">
-          <span className="section-tag">Năng Lực Chuyên Sâu</span>
+          <span className="section-tag">Technical Competencies</span>
           <h2 className="section-title">
-            Hệ Sinh Thái <span className="text-gradient">Kỹ Thuật</span>
+            Skills & <span className="text-gradient">Core Capabilities</span>
           </h2>
           <p className="section-desc">
-            Công nghệ cốt lõi được ứng dụng thực tế trong các sản phẩm thương mại và hệ thống chịu tải cao.
+            Verified technologies, frameworks, and modern agentic engineering tools actively used in production and personal projects.
           </p>
         </div>
 
-        {/* Skills Grid */}
+        {/* Competencies Grid */}
         <div className="skills-grid">
-          {SKILLS_DATA.map((cat, idx) => (
+          {SKILLS_COMPETENCIES.map((cat, idx) => (
             <div key={idx} className="skill-cat-card glass-panel">
               <div className="cat-header">
                 <div className="cat-icon-wrap">
@@ -38,20 +41,11 @@ export default function SkillsMatrix() {
                 <h3 className="cat-title">{cat.category}</h3>
               </div>
 
-              <div className="skills-list">
+              <div className="skills-pills-wrap">
                 {cat.skills.map((skill, sIdx) => (
-                  <div key={sIdx} className="skill-item">
-                    <div className="skill-info">
-                      <span className="skill-name">{skill.name}</span>
-                      <span className="skill-level">{skill.level}</span>
-                    </div>
-                    <div className="skill-progress-track">
-                      <div 
-                        className="skill-progress-bar"
-                        style={{ width: `${skill.percent}%` }}
-                      />
-                    </div>
-                  </div>
+                  <span key={sIdx} className="skill-pill">
+                    {skill}
+                  </span>
                 ))}
               </div>
             </div>
@@ -67,96 +61,78 @@ export default function SkillsMatrix() {
 
         .skills-grid {
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 24px;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
         }
 
         .skill-cat-card {
-          padding: 28px;
+          padding: 24px;
           border-radius: var(--radius-lg);
           border: 1px solid var(--border-subtle);
-          background: rgba(14, 20, 32, 0.7);
-          display: flex;
-          flex-direction: column;
-          gap: 22px;
-        }
-
-        .cat-header {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          border-bottom: 1px solid var(--border-subtle);
-          padding-bottom: 14px;
-        }
-
-        .cat-icon-wrap {
-          width: 42px;
-          height: 42px;
-          border-radius: var(--radius-sm);
-          background: rgba(255, 255, 255, 0.04);
-          border: 1px solid var(--border-subtle);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .cat-title {
-          font-size: 1.2rem;
-          color: var(--text-primary);
-          font-weight: 700;
-        }
-
-        .skills-list {
           display: flex;
           flex-direction: column;
           gap: 16px;
         }
 
-        .skill-item {
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-        }
-
-        .skill-info {
+        .cat-header {
           display: flex;
           align-items: center;
-          justify-content: space-between;
+          gap: 12px;
+          border-bottom: 1px solid var(--border-subtle);
+          padding-bottom: 12px;
         }
 
-        .skill-name {
-          font-size: 0.92rem;
-          color: #e2e8f0;
-          font-weight: 500;
+        .cat-icon-wrap {
+          width: 36px;
+          height: 36px;
+          border-radius: var(--radius-sm);
+          background: var(--badge-bg);
+          border: 1px solid var(--border-subtle);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
         }
 
-        .skill-level {
+        .cat-title {
+          font-size: 1.05rem;
+          color: var(--text-primary);
+          font-weight: 700;
+        }
+
+        .skills-pills-wrap {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+
+        .skill-pill {
+          display: inline-flex;
+          align-items: center;
+          padding: 5px 12px;
+          border-radius: var(--radius-sm);
           font-family: var(--font-mono);
-          font-size: 0.75rem;
+          font-size: 0.78rem;
+          font-weight: 500;
+          background: var(--badge-bg);
+          border: 1px solid var(--border-subtle);
+          color: var(--text-primary);
+          transition: all 0.2s ease;
+        }
+
+        .skill-pill:hover {
+          border-color: var(--border-focus);
           color: var(--accent-cyan);
-          background: rgba(0, 242, 254, 0.08);
-          border: 1px solid rgba(0, 242, 254, 0.2);
-          padding: 2px 8px;
-          border-radius: var(--radius-full);
+          transform: translateY(-1px);
         }
 
-        .skill-progress-track {
-          width: 100%;
-          height: 6px;
-          background: rgba(255, 255, 255, 0.05);
-          border-radius: 3px;
-          overflow: hidden;
+        @media (max-width: 980px) {
+          .skills-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
         }
 
-        .skill-progress-bar {
-          height: 100%;
-          background: var(--gradient-cyber);
-          border-radius: 3px;
-          box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
-          transition: width 1s ease-in-out;
-        }
-
-        @media (max-width: 768px) {
+        @media (max-width: 640px) {
           .skills-grid {
             grid-template-columns: 1fr;
           }

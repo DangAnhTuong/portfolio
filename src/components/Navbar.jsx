@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Terminal, Github, Send, Menu, X } from 'lucide-react';
+import { Terminal, Sun, Moon, FileText, Menu, X } from 'lucide-react';
 import { PROFILE } from '../data/projects';
 
-export default function Navbar() {
+export default function Navbar({ theme, toggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -17,59 +17,81 @@ export default function Navbar() {
   return (
     <header className={`navbar-wrapper ${scrolled ? 'navbar-scrolled' : ''}`}>
       <div className="container navbar-container">
-        <a href="#hero" className="navbar-brand">
+        {/* Brand Logo */}
+        <a href="#home" className="navbar-brand">
           <div className="brand-icon">
-            <Terminal size={18} color="var(--accent-cyan)" />
+            <Terminal size={17} color="var(--accent-cyan)" />
           </div>
           <div className="brand-text">
-            <span className="brand-name">{PROFILE.name}</span>
-            <span className="brand-role">Full-Stack & AI</span>
+            <span className="brand-name">{PROFILE.brandLogo}</span>
+            <span className="brand-role">Software Engineer</span>
           </div>
         </a>
 
-        {/* Desktop Nav */}
+        {/* 4 Standard Navigation Tabs */}
         <nav className="nav-links">
-          <a href="#projects" className="nav-item">Dự Án</a>
-          <a href="#skills" className="nav-item">Kỹ Năng</a>
-          <a href="#cloud-architecture" className="nav-item">Hạ Tầng Cloud 0đ</a>
-          <a href="#contact" className="nav-item">Liên Hệ</a>
+          <a href="#home" className="nav-item">Home</a>
+          <a href="#about" className="nav-item">About</a>
+          <a href="#projects" className="nav-item">Projects</a>
+          <a href="#contact" className="nav-item">Contact</a>
         </nav>
 
-        {/* Action Group */}
+        {/* Right Actions: Theme Toggle + Resume Button */}
         <div className="navbar-actions">
+          {/* Light / Dark Mode Toggle */}
+          <button 
+            className="theme-toggle-btn"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
+            title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} mode`}
+          >
+            {theme === 'dark' ? (
+              <Sun size={18} color="#fbbf24" className="theme-icon" />
+            ) : (
+              <Moon size={18} color="#6366f1" className="theme-icon" />
+            )}
+          </button>
+
+          {/* Download Resume / CV */}
           <a 
-            href={PROFILE.github} 
+            href={PROFILE.cvUrl} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="btn btn-secondary btn-sm"
-            title="Xem GitHub Profile"
+            className="btn btn-primary btn-sm"
+            title="Download Official Resume PDF"
           >
-            <Github size={16} />
-            <span className="hide-mobile">GitHub</span>
+            <FileText size={15} />
+            <span>Resume</span>
           </a>
 
-          <a href="#contact" className="btn btn-primary btn-sm">
-            <Send size={15} />
-            <span>Kết Nối</span>
-          </a>
-
+          {/* Mobile Menu Button */}
           <button 
             className="mobile-toggle-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle Navigation Menu"
+            aria-label="Toggle Navigation"
           >
             {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="mobile-menu glass-panel">
-          <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-item">Dự Án Thực Chiến</a>
-          <a href="#skills" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-item">Kỹ Năng Chuyên Môn</a>
-          <a href="#cloud-architecture" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-item">Hạ Tầng Cloud 0đ</a>
-          <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-item">Liên Hệ Trực Tiếp</a>
+          <a href="#home" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-item">Home</a>
+          <a href="#about" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-item">About Me</a>
+          <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-item">Featured Projects</a>
+          <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-item">Contact</a>
+          <a 
+            href={PROFILE.cvUrl} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="btn btn-primary btn-sm"
+            style={{ marginTop: '8px' }}
+          >
+            <FileText size={16} />
+            <span>Download Resume PDF</span>
+          </a>
         </div>
       )}
 
@@ -86,11 +108,11 @@ export default function Navbar() {
 
         .navbar-scrolled {
           padding: 12px 0;
-          background: rgba(7, 9, 14, 0.85);
+          background: var(--bg-nav);
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
           border-bottom: 1px solid var(--border-subtle);
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         .navbar-container {
@@ -102,7 +124,7 @@ export default function Navbar() {
         .navbar-brand {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 10px;
           text-decoration: none;
         }
 
@@ -110,8 +132,8 @@ export default function Navbar() {
           width: 36px;
           height: 36px;
           border-radius: var(--radius-sm);
-          background: rgba(0, 242, 254, 0.1);
-          border: 1px solid rgba(0, 242, 254, 0.25);
+          background: rgba(14, 165, 233, 0.1);
+          border: 1px solid rgba(14, 165, 233, 0.25);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -124,28 +146,28 @@ export default function Navbar() {
 
         .brand-name {
           font-family: var(--font-heading);
-          font-weight: 700;
+          font-weight: 800;
           font-size: 1.05rem;
           color: var(--text-primary);
+          letter-spacing: -0.02em;
         }
 
         .brand-role {
           font-family: var(--font-mono);
           font-size: 0.72rem;
           color: var(--accent-cyan);
-          letter-spacing: 0.05em;
         }
 
         .nav-links {
           display: flex;
           align-items: center;
-          gap: 28px;
+          gap: 32px;
         }
 
         .nav-item {
           font-family: var(--font-heading);
-          font-size: 0.92rem;
-          font-weight: 500;
+          font-size: 0.94rem;
+          font-weight: 600;
           color: var(--text-secondary);
           text-decoration: none;
           transition: color 0.2s ease;
@@ -163,7 +185,7 @@ export default function Navbar() {
           left: 0;
           width: 0;
           height: 2px;
-          background: var(--gradient-cyber);
+          background: var(--gradient-brand);
           transition: width 0.25s ease;
           border-radius: 2px;
         }
@@ -178,9 +200,27 @@ export default function Navbar() {
           gap: 12px;
         }
 
+        .theme-toggle-btn {
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          background: var(--badge-bg);
+          border: 1px solid var(--border-subtle);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .theme-toggle-btn:hover {
+          transform: rotate(20deg) scale(1.06);
+          border-color: var(--border-focus);
+        }
+
         .btn-sm {
-          padding: 8px 16px;
-          font-size: 0.85rem;
+          padding: 8px 18px;
+          font-size: 0.88rem;
         }
 
         .mobile-toggle-btn {
@@ -200,7 +240,7 @@ export default function Navbar() {
           padding: 20px;
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 14px;
           border-radius: var(--radius-md);
           margin-top: 10px;
         }
@@ -220,9 +260,6 @@ export default function Navbar() {
           }
           .mobile-toggle-btn {
             display: block;
-          }
-          .hide-mobile {
-            display: none;
           }
         }
       `}</style>

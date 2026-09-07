@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Github, Info, Sparkles } from 'lucide-react';
+import { ExternalLink, Github, Info, Sparkles, CheckCircle2 } from 'lucide-react';
 import { PROJECTS, CATEGORIES } from '../data/projects';
 import ProjectModal from './ProjectModal';
 
@@ -14,14 +14,14 @@ export default function ProjectShowcase() {
   return (
     <section id="projects" className="projects-section">
       <div className="container">
-        {/* Header */}
+        {/* Section Header */}
         <div className="section-header">
-          <span className="section-tag">Thực Chiến & Sản Phẩm</span>
+          <span className="section-tag">Featured Engineering</span>
           <h2 className="section-title">
-            Các Dự Án <span className="text-gradient">Tiêu Biểu</span>
+            Production & Personal <span className="text-gradient">Projects</span>
           </h2>
           <p className="section-desc">
-            Tuyển tập các hệ thống phân tán chịu tải cao, trải nghiệm đồ họa 3D WebGL và giải pháp AI được triển khai hoàn chỉnh.
+            Decoupled microservices, real-time AI audio streaming, and high-fidelity 3D WebGL interfaces built with verified engineering standards.
           </p>
         </div>
 
@@ -38,18 +38,18 @@ export default function ProjectShowcase() {
           ))}
         </div>
 
-        {/* Project Cards Grid */}
+        {/* Projects Grid */}
         <div className="projects-grid">
           {filteredProjects.map((project) => (
             <div key={project.id} className="project-card glass-panel">
-              {/* Card Top Glow */}
+              {/* Card Top Accent Bar */}
               <div 
                 className="card-glow-bar" 
                 style={{ background: project.gradient }}
               />
 
               <div className="card-content">
-                {/* Meta row */}
+                {/* Meta Row */}
                 <div className="card-meta">
                   <span 
                     className="badge category-badge" 
@@ -57,39 +57,46 @@ export default function ProjectShowcase() {
                   >
                     {project.category.toUpperCase()}
                   </span>
-                  {project.featured && (
-                    <span className="featured-pill">
-                      <Sparkles size={12} color="var(--accent-amber)" />
-                      <span>Featured System</span>
-                    </span>
-                  )}
+                  <span className="timeline-pill">
+                    {project.timeline}
+                  </span>
                 </div>
 
                 {/* Title & Tagline */}
                 <h3 className="project-title">{project.title}</h3>
+                <p className="project-role">{project.role}</p>
                 <p className="project-tagline">{project.tagline}</p>
-                <p className="project-desc">{project.description}</p>
 
-                {/* Tech Tags */}
+                {/* Bullet Points from CV */}
+                <div className="project-bullets">
+                  {project.bullets.slice(0, 2).map((bullet, idx) => (
+                    <div key={idx} className="bullet-row">
+                      <CheckCircle2 size={15} color="var(--accent-emerald)" className="bullet-icon" />
+                      <span>{bullet}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tech Badges */}
                 <div className="project-tags">
-                  {project.tags.slice(0, 5).map((tag, idx) => (
+                  {project.techStack.slice(0, 5).map((tech, idx) => (
                     <span key={idx} className="badge tag-pill">
-                      {tag}
+                      {tech}
                     </span>
                   ))}
-                  {project.tags.length > 5 && (
-                    <span className="badge tag-pill-more">+{project.tags.length - 5}</span>
+                  {project.techStack.length > 5 && (
+                    <span className="badge tag-pill-more">+{project.techStack.length - 5}</span>
                   )}
                 </div>
 
-                {/* Action Buttons */}
+                {/* Card Actions */}
                 <div className="card-actions">
                   <button 
                     className="btn btn-secondary card-btn"
                     onClick={() => setSelectedProject(project)}
                   >
                     <Info size={15} color="var(--accent-cyan)" />
-                    <span>Chi Tiết Kiến Trúc</span>
+                    <span>System Architecture</span>
                   </button>
 
                   <div className="action-links">
@@ -98,9 +105,9 @@ export default function ProjectShowcase() {
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="icon-action-btn"
-                      title="Xem Source Code trên GitHub"
+                      title="View GitHub Repository"
                     >
-                      <Github size={18} />
+                      <Github size={17} />
                     </a>
 
                     <a 
@@ -108,9 +115,9 @@ export default function ProjectShowcase() {
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="icon-action-btn"
-                      title="Mở Trải Nghiệm Demo"
+                      title="Open Live Preview"
                     >
-                      <ExternalLink size={18} />
+                      <ExternalLink size={17} />
                     </a>
                   </div>
                 </div>
@@ -120,7 +127,7 @@ export default function ProjectShowcase() {
         </div>
       </div>
 
-      {/* Detail Modal */}
+      {/* Architecture Walkthrough Modal */}
       {selectedProject && (
         <ProjectModal 
           project={selectedProject} 
@@ -140,17 +147,17 @@ export default function ProjectShowcase() {
           justify-content: center;
           flex-wrap: wrap;
           gap: 10px;
-          margin-bottom: 48px;
+          margin-bottom: 44px;
         }
 
         .filter-btn {
           padding: 8px 20px;
           border-radius: var(--radius-full);
           font-family: var(--font-heading);
-          font-size: 0.9rem;
+          font-size: 0.88rem;
           font-weight: 600;
           color: var(--text-secondary);
-          background: rgba(255, 255, 255, 0.03);
+          background: var(--badge-bg);
           border: 1px solid var(--border-subtle);
           cursor: pointer;
           transition: all 0.25s ease;
@@ -158,20 +165,20 @@ export default function ProjectShowcase() {
 
         .filter-btn:hover {
           color: var(--text-primary);
-          border-color: rgba(255, 255, 255, 0.2);
+          border-color: var(--border-focus);
         }
 
         .filter-btn.active {
-          background: var(--gradient-cyber);
-          color: #040914;
+          background: var(--gradient-brand);
+          color: #ffffff;
           border-color: transparent;
-          box-shadow: 0 4px 18px rgba(0, 242, 254, 0.3);
+          box-shadow: 0 4px 18px rgba(14, 165, 233, 0.3);
         }
 
         .projects-grid {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          gap: 28px;
+          gap: 26px;
         }
 
         .project-card {
@@ -181,15 +188,6 @@ export default function ProjectShowcase() {
           display: flex;
           flex-direction: column;
           border: 1px solid var(--border-subtle);
-          background: rgba(13, 18, 30, 0.75);
-          backdrop-filter: blur(16px);
-          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .project-card:hover {
-          transform: translateY(-6px);
-          border-color: rgba(0, 242, 254, 0.4);
-          box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 242, 254, 0.15);
         }
 
         .card-glow-bar {
@@ -208,57 +206,70 @@ export default function ProjectShowcase() {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 14px;
+          margin-bottom: 12px;
         }
 
-        .featured-pill {
-          display: inline-flex;
-          align-items: center;
-          gap: 5px;
+        .timeline-pill {
           font-family: var(--font-mono);
-          font-size: 0.72rem;
-          color: #fbbf24;
-          background: rgba(245, 158, 11, 0.1);
-          border: 1px solid rgba(245, 158, 11, 0.25);
-          padding: 3px 10px;
-          border-radius: var(--radius-full);
+          font-size: 0.74rem;
+          color: var(--text-muted);
         }
 
         .project-title {
-          font-size: 1.45rem;
+          font-size: 1.35rem;
           color: var(--text-primary);
-          margin-bottom: 8px;
+          margin-bottom: 4px;
           font-weight: 700;
+        }
+
+        .project-role {
+          font-family: var(--font-mono);
+          font-size: 0.78rem;
+          color: var(--accent-cyan);
+          margin-bottom: 8px;
         }
 
         .project-tagline {
           font-size: 0.9rem;
-          color: var(--accent-cyan);
-          font-weight: 500;
-          margin-bottom: 12px;
-          font-family: var(--font-body);
+          color: var(--text-secondary);
+          line-height: 1.5;
+          margin-bottom: 18px;
         }
 
-        .project-desc {
-          font-size: 0.92rem;
-          color: var(--text-secondary);
-          line-height: 1.6;
+        .project-bullets {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
           margin-bottom: 20px;
           flex-grow: 1;
+        }
+
+        .bullet-row {
+          display: flex;
+          align-items: flex-start;
+          gap: 8px;
+          font-size: 0.85rem;
+          color: var(--text-secondary);
+          line-height: 1.45;
+        }
+
+        .bullet-icon {
+          flex-shrink: 0;
+          margin-top: 2px;
         }
 
         .project-tags {
           display: flex;
           flex-wrap: wrap;
-          gap: 7px;
-          margin-bottom: 24px;
+          gap: 6px;
+          margin-bottom: 22px;
         }
 
         .tag-pill {
           font-size: 0.74rem;
-          background: rgba(255, 255, 255, 0.04);
-          border-color: rgba(255, 255, 255, 0.08);
-          color: #cbd5e1;
+          background: var(--badge-bg);
+          border-color: var(--badge-border);
+          color: var(--text-secondary);
         }
 
         .tag-pill-more {
@@ -279,23 +290,23 @@ export default function ProjectShowcase() {
 
         .card-btn {
           padding: 8px 16px;
-          font-size: 0.85rem;
+          font-size: 0.84rem;
         }
 
         .action-links {
           display: flex;
           align-items: center;
-          gap: 10px;
+          gap: 8px;
         }
 
         .icon-action-btn {
-          width: 38px;
-          height: 38px;
+          width: 36px;
+          height: 36px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          background: rgba(255, 255, 255, 0.05);
+          background: var(--badge-bg);
           border: 1px solid var(--border-subtle);
           color: var(--text-secondary);
           text-decoration: none;
@@ -304,7 +315,6 @@ export default function ProjectShowcase() {
 
         .icon-action-btn:hover {
           color: var(--text-primary);
-          background: rgba(255, 255, 255, 0.12);
           border-color: var(--border-focus);
           transform: translateY(-2px);
         }

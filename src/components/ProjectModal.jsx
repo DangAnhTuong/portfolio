@@ -23,10 +23,10 @@ export default function ProjectModal({ project, onClose }) {
         <div className="modal-header">
           <div>
             <span className="badge" style={{ borderColor: project.badgeColor, color: project.badgeColor }}>
-              {project.category.toUpperCase()}
+              {project.category.toUpperCase()} · {project.timeline}
             </span>
             <h2 className="modal-title">{project.title}</h2>
-            <p className="modal-tagline">{project.tagline}</p>
+            <p className="modal-role">{project.role}</p>
           </div>
           <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">
             <X size={20} />
@@ -35,20 +35,20 @@ export default function ProjectModal({ project, onClose }) {
 
         {/* Body Content */}
         <div className="modal-body">
-          {/* Description */}
+          {/* Summary */}
           <div className="modal-section">
-            <h4 className="modal-section-title">Tổng Quan Bài Toán</h4>
+            <h4 className="modal-section-title">Overview & Purpose</h4>
             <p className="modal-text">{project.description}</p>
           </div>
 
-          {/* Highlights */}
+          {/* Key Deliverables & Technical Highlights (Strict from CV) */}
           <div className="modal-section">
-            <h4 className="modal-section-title">Điểm Nhấn Kỹ Thuật & Giải Pháp</h4>
+            <h4 className="modal-section-title">Verified Engineering Deliverables</h4>
             <div className="highlights-list">
-              {project.highlights.map((item, idx) => (
+              {project.bullets.map((bullet, idx) => (
                 <div key={idx} className="highlight-item">
-                  <CheckCircle2 size={18} color="var(--accent-emerald)" className="highlight-icon" />
-                  <span>{item}</span>
+                  <CheckCircle2 size={17} color="var(--accent-emerald)" className="highlight-icon" />
+                  <span>{bullet}</span>
                 </div>
               ))}
             </div>
@@ -56,13 +56,13 @@ export default function ProjectModal({ project, onClose }) {
 
           {/* Architecture Mapping */}
           <div className="modal-section">
-            <h4 className="modal-section-title">Bản Đồ Kiến Trúc Hệ Thống (Architecture Stack)</h4>
+            <h4 className="modal-section-title">System Architecture Layers</h4>
             <div className="arch-grid">
               {project.architecture.frontend && (
                 <div className="arch-card">
                   <div className="arch-head">
-                    <Layout size={16} color="var(--accent-cyan)" />
-                    <span>Frontend Layer</span>
+                    <Layout size={15} color="var(--accent-cyan)" />
+                    <span>Frontend Client</span>
                   </div>
                   <p>{project.architecture.frontend}</p>
                 </div>
@@ -70,8 +70,8 @@ export default function ProjectModal({ project, onClose }) {
               {project.architecture.backend && (
                 <div className="arch-card">
                   <div className="arch-head">
-                    <Server size={16} color="var(--accent-indigo)" />
-                    <span>Backend & API Gateway</span>
+                    <Server size={15} color="var(--accent-indigo)" />
+                    <span>Backend Microservices</span>
                   </div>
                   <p>{project.architecture.backend}</p>
                 </div>
@@ -79,7 +79,7 @@ export default function ProjectModal({ project, onClose }) {
               {project.architecture.database && (
                 <div className="arch-card">
                   <div className="arch-head">
-                    <Database size={16} color="var(--accent-emerald)" />
+                    <Database size={15} color="var(--accent-emerald)" />
                     <span>Database & Caching</span>
                   </div>
                   <p>{project.architecture.database}</p>
@@ -88,8 +88,8 @@ export default function ProjectModal({ project, onClose }) {
               {project.architecture.devops && (
                 <div className="arch-card">
                   <div className="arch-head">
-                    <Terminal size={16} color="var(--accent-amber)" />
-                    <span>DevOps & Container</span>
+                    <Terminal size={15} color="var(--accent-amber)" />
+                    <span>DevOps & Deployment</span>
                   </div>
                   <p>{project.architecture.devops}</p>
                 </div>
@@ -97,8 +97,8 @@ export default function ProjectModal({ project, onClose }) {
               {project.architecture.core && (
                 <div className="arch-card">
                   <div className="arch-head">
-                    <ShieldCheck size={16} color="var(--accent-cyan)" />
-                    <span>Core Engine & 3D</span>
+                    <ShieldCheck size={15} color="var(--accent-cyan)" />
+                    <span>3D Graphics & Engine</span>
                   </div>
                   <p>{project.architecture.core}</p>
                 </div>
@@ -108,9 +108,9 @@ export default function ProjectModal({ project, onClose }) {
 
           {/* Tech Badges */}
           <div className="modal-section">
-            <h4 className="modal-section-title">Công Nghệ Sử Dụng</h4>
+            <h4 className="modal-section-title">Technologies Used</h4>
             <div className="tags-container">
-              {project.tags.map((tag, idx) => (
+              {project.techStack.map((tag, idx) => (
                 <span key={idx} className="badge">
                   {tag}
                 </span>
@@ -122,12 +122,12 @@ export default function ProjectModal({ project, onClose }) {
         {/* Footer Actions */}
         <div className="modal-footer">
           <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-            <Github size={18} />
-            <span>Mã Nguồn GitHub</span>
+            <Github size={17} />
+            <span>View Source Code</span>
           </a>
           <a href={project.demo} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-            <ExternalLink size={18} />
-            <span>Xem Trải Nghiệm Demo</span>
+            <ExternalLink size={17} />
+            <span>Interactive Demo</span>
           </a>
         </div>
       </div>
@@ -139,7 +139,7 @@ export default function ProjectModal({ project, onClose }) {
           left: 0;
           right: 0;
           bottom: 0;
-          background: rgba(4, 7, 13, 0.85);
+          background: rgba(4, 7, 13, 0.75);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           z-index: 2000;
@@ -147,23 +147,22 @@ export default function ProjectModal({ project, onClose }) {
           align-items: center;
           justify-content: center;
           padding: 24px;
-          animation: fadeIn 0.25s ease;
+          animation: fadeIn 0.2s ease;
         }
 
         .modal-content {
           width: 100%;
-          max-width: 760px;
+          max-width: 740px;
           max-height: 90vh;
           overflow-y: auto;
-          background: #0f1626;
-          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: var(--bg-card);
+          border: 1px solid var(--border-subtle);
           border-radius: var(--radius-lg);
           padding: 32px;
           display: flex;
           flex-direction: column;
-          gap: 24px;
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
-          animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          gap: 22px;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
 
         .modal-header {
@@ -171,23 +170,24 @@ export default function ProjectModal({ project, onClose }) {
           align-items: flex-start;
           justify-content: space-between;
           border-bottom: 1px solid var(--border-subtle);
-          padding-bottom: 18px;
+          padding-bottom: 16px;
         }
 
         .modal-title {
-          font-size: 1.6rem;
+          font-size: 1.5rem;
           color: var(--text-primary);
-          margin-top: 8px;
+          margin-top: 6px;
         }
 
-        .modal-tagline {
-          font-size: 0.95rem;
-          color: var(--text-secondary);
-          margin-top: 4px;
+        .modal-role {
+          font-size: 0.9rem;
+          color: var(--accent-cyan);
+          font-family: var(--font-mono);
+          margin-top: 2px;
         }
 
         .modal-close-btn {
-          background: rgba(255, 255, 255, 0.06);
+          background: var(--badge-bg);
           border: 1px solid var(--border-subtle);
           color: var(--text-secondary);
           width: 36px;
@@ -201,8 +201,8 @@ export default function ProjectModal({ project, onClose }) {
         }
 
         .modal-close-btn:hover {
-          background: rgba(255, 255, 255, 0.15);
           color: var(--text-primary);
+          border-color: var(--border-focus);
         }
 
         .modal-body {
@@ -212,64 +212,65 @@ export default function ProjectModal({ project, onClose }) {
         }
 
         .modal-section-title {
-          font-size: 0.95rem;
+          font-size: 0.85rem;
           font-family: var(--font-mono);
           text-transform: uppercase;
           color: var(--accent-cyan);
-          letter-spacing: 0.06em;
-          margin-bottom: 10px;
+          letter-spacing: 0.08em;
+          margin-bottom: 8px;
         }
 
         .modal-text {
-          color: #cbd5e1;
-          font-size: 0.98rem;
+          color: var(--text-secondary);
+          font-size: 0.95rem;
           line-height: 1.65;
         }
 
         .highlights-list {
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 10px;
         }
 
         .highlight-item {
           display: flex;
           align-items: flex-start;
           gap: 10px;
-          font-size: 0.92rem;
-          color: #e2e8f0;
+          font-size: 0.9rem;
+          color: var(--text-primary);
+          line-height: 1.5;
         }
 
         .highlight-icon {
           flex-shrink: 0;
-          margin-top: 2px;
+          margin-top: 3px;
         }
 
         .arch-grid {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          gap: 12px;
+          gap: 10px;
         }
 
         .arch-card {
-          background: rgba(255, 255, 255, 0.03);
+          background: var(--badge-bg);
           border: 1px solid var(--border-subtle);
-          padding: 14px;
+          padding: 12px;
           border-radius: var(--radius-sm);
         }
 
         .arch-head {
           display: flex;
           align-items: center;
-          gap: 8px;
-          font-size: 0.85rem;
+          gap: 7px;
+          font-size: 0.82rem;
           font-weight: 600;
           color: var(--text-primary);
-          margin-bottom: 6px;
+          margin-bottom: 4px;
         }
 
         .arch-card p {
-          font-size: 0.82rem;
+          font-size: 0.8rem;
           color: var(--text-muted);
           line-height: 1.4;
         }
@@ -277,7 +278,7 @@ export default function ProjectModal({ project, onClose }) {
         .tags-container {
           display: flex;
           flex-wrap: wrap;
-          gap: 8px;
+          gap: 7px;
         }
 
         .modal-footer {
@@ -286,17 +287,7 @@ export default function ProjectModal({ project, onClose }) {
           justify-content: flex-end;
           gap: 12px;
           border-top: 1px solid var(--border-subtle);
-          padding-top: 20px;
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-
-        @keyframes scaleUp {
-          from { transform: scale(0.95); opacity: 0; }
-          to { transform: scale(1); opacity: 1; }
+          padding-top: 18px;
         }
 
         @media (max-width: 640px) {

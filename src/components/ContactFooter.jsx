@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Copy, Check, Github, Send, Heart, Globe, Terminal, Sparkles } from 'lucide-react';
+import { Mail, Copy, Check, Github, Linkedin, Phone, MapPin, Send, FileText, Sparkles, ExternalLink } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { PROFILE } from '../data/projects';
 
@@ -12,12 +12,11 @@ export default function ContactFooter() {
     navigator.clipboard.writeText(PROFILE.email);
     setCopied(true);
 
-    // Fire cyber celebratory confetti
     confetti({
-      particleCount: 60,
-      spread: 70,
+      particleCount: 50,
+      spread: 60,
       origin: { y: 0.85 },
-      colors: ['#00f2fe', '#6366f1', '#10b981', '#ffffff']
+      colors: ['#0ea5e9', '#6366f1', '#10b981', '#ffffff']
     });
 
     setTimeout(() => setCopied(false), 3000);
@@ -25,7 +24,7 @@ export default function ContactFooter() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const mailtoUrl = `mailto:${PROFILE.email}?subject=Hợp tác dự án từ ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message + '\n\nLiên hệ lại qua: ' + formData.email)}`;
+    const mailtoUrl = `mailto:${PROFILE.email}?subject=Project / Internship Inquiry from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message + '\n\nSender Contact: ' + formData.email)}`;
     window.location.href = mailtoUrl;
     setSentStatus(true);
     setTimeout(() => setSentStatus(false), 4000);
@@ -34,46 +33,60 @@ export default function ContactFooter() {
   return (
     <footer id="contact" className="contact-footer">
       <div className="container">
-        {/* Contact CTA Card */}
+        {/* Contact Container Card */}
         <div className="contact-card glass-panel">
           <div className="contact-grid">
-            {/* Left Column: Direct Info */}
+            {/* Left Column: Direct Info & Verified Channels */}
             <div className="contact-info">
-              <span className="section-tag">Khởi Đầu Hợp Tác</span>
+              <span className="section-tag">Direct Communication</span>
               <h2 className="contact-title">
-                Hãy Cùng Xây Dựng <br />
-                <span className="text-gradient">Sản Phẩm Tiếp Theo!</span>
+                Let's Discuss Next <br />
+                <span className="text-gradient">Opportunities</span>
               </h2>
               <p className="contact-desc">
-                Bạn có ý tưởng dự án cần kiến trúc chịu tải cao, giao diện 3D sống động hoặc tích hợp AI thông minh? Tôi luôn sẵn sàng trao đổi và đồng hành.
+                I am actively seeking a <strong>Full-stack / Frontend Software Engineer Internship</strong>. Feel free to reach out via email, phone, or LinkedIn to discuss how I can contribute to your engineering team.
               </p>
 
-              {/* Copy Email Box */}
-              <div className="email-copy-box">
-                <div className="email-text-wrap">
-                  <Mail size={18} color="var(--accent-cyan)" />
-                  <span className="email-text">{PROFILE.email}</span>
+              {/* Direct Info Pills */}
+              <div className="info-pills-list">
+                <div className="email-copy-box">
+                  <div className="email-text-wrap">
+                    <Mail size={16} color="var(--accent-cyan)" />
+                    <span className="email-text">{PROFILE.email}</span>
+                  </div>
+                  <button 
+                    className={`copy-btn ${copied ? 'copied' : ''}`}
+                    onClick={handleCopyEmail}
+                    title="Copy email to clipboard"
+                  >
+                    {copied ? (
+                      <>
+                        <Check size={15} color="var(--accent-emerald)" />
+                        <span>Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy size={15} />
+                        <span>Copy Email</span>
+                      </>
+                    )}
+                  </button>
                 </div>
-                <button 
-                  className={`copy-btn ${copied ? 'copied' : ''}`}
-                  onClick={handleCopyEmail}
-                  title="Copy email vào bộ nhớ tạm"
-                >
-                  {copied ? (
-                    <>
-                      <Check size={16} color="var(--accent-emerald)" />
-                      <span>Đã Copy!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy size={16} />
-                      <span>Sao Chép</span>
-                    </>
-                  )}
-                </button>
+
+                <div className="contact-meta-row">
+                  <a href={`tel:${PROFILE.phone}`} className="meta-item-link">
+                    <Phone size={15} color="var(--accent-emerald)" />
+                    <span>{PROFILE.phone}</span>
+                  </a>
+
+                  <div className="meta-item">
+                    <MapPin size={15} color="var(--accent-indigo)" />
+                    <span>{PROFILE.location}</span>
+                  </div>
+                </div>
               </div>
 
-              {/* Social links */}
+              {/* Social Channels */}
               <div className="social-links-row">
                 <a 
                   href={PROFILE.github} 
@@ -82,56 +95,78 @@ export default function ContactFooter() {
                   className="social-btn"
                   title="GitHub Profile"
                 >
-                  <Github size={20} />
-                  <span>github.com/{PROFILE.githubUsername}</span>
+                  <Github size={17} />
+                  <span>GitHub</span>
+                </a>
+
+                <a 
+                  href={PROFILE.linkedin} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="social-btn"
+                  title="LinkedIn Profile"
+                >
+                  <Linkedin size={17} />
+                  <span>LinkedIn</span>
+                </a>
+
+                <a 
+                  href={PROFILE.cvUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="social-btn"
+                  title="Download Resume PDF"
+                >
+                  <FileText size={17} />
+                  <span>Resume (PDF)</span>
                 </a>
               </div>
             </div>
 
-            {/* Right Column: Quick Message Form */}
+            {/* Right Column: Quick Contact Form */}
             <div className="contact-form-wrap">
               <form onSubmit={handleFormSubmit} className="quick-form">
-                <h3 className="form-title">Gửi Tin Nhắn Nhanh</h3>
+                <h3 className="form-title">Send a Quick Message</h3>
 
                 <div className="form-group">
-                  <label htmlFor="form-name">Họ & Tên của bạn</label>
+                  <label htmlFor="form-name">Your Full Name</label>
                   <input
                     id="form-name"
                     type="text"
                     required
-                    placeholder="Ví dụ: Nguyễn Văn A"
+                    placeholder="e.g. John Doe / Tech Recruiter"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="form-email">Email liên hệ</label>
+                  <label htmlFor="form-email">Your Email Address</label>
                   <input
                     id="form-email"
                     type="email"
                     required
-                    placeholder="name@example.com"
+                    placeholder="name@company.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="form-msg">Nội dung trao đổi / Dự án</label>
+                  <label htmlFor="form-msg">Inquiry Details</label>
                   <textarea
                     id="form-msg"
                     rows="3"
                     required
-                    placeholder="Mô tả ngắn gọn về nhu cầu hoặc lời nhắn của bạn..."
+                    placeholder="Briefly describe the role, project, or collaboration..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   ></textarea>
                 </div>
 
                 <button type="submit" className="btn btn-primary form-submit-btn">
-                  <Send size={16} />
-                  <span>{sentStatus ? 'Đang Mở Trình Gửi Mail...' : 'Gửi Yêu Cầu Liên Hệ'}</span>
+                  <Send size={15} />
+                  <span>{sentStatus ? 'Opening Mail Client...' : 'Dispatch Message'}</span>
                 </button>
               </form>
             </div>
@@ -142,22 +177,18 @@ export default function ContactFooter() {
         <div className="footer-bottom">
           <div className="footer-left">
             <span className="footer-copyright">
-              © {new Date().getFullYear()} <strong>{PROFILE.name}</strong>. Bản quyền thuộc về tác giả.
+              © {new Date().getFullYear()} <strong>{PROFILE.name}</strong>. Built with React 19 & Vite.
             </span>
           </div>
 
           <div className="footer-badges">
             <span className="badge footer-badge">
-              <Sparkles size={12} color="var(--accent-cyan)" />
-              React 19 & Vite
+              <Sparkles size={11} color="var(--accent-cyan)" />
+              Verified CV Data
             </span>
             <span className="badge footer-badge">
-              <Globe size={12} color="var(--accent-indigo)" />
-              100% Free Vercel Cloud
-            </span>
-            <span className="badge footer-badge">
-              <Terminal size={12} color="var(--accent-emerald)" />
-              Custom Domain Ready
+              <Check size={11} color="var(--accent-emerald)" />
+              CEFR B1 Standard
             </span>
           </div>
         </div>
@@ -165,65 +196,64 @@ export default function ContactFooter() {
 
       <style>{`
         .contact-footer {
-          padding: 80px 0 36px;
+          padding: 70px 0 36px;
           position: relative;
         }
 
         .contact-card {
-          padding: 48px;
+          padding: 44px;
           border-radius: var(--radius-lg);
           border: 1px solid var(--border-subtle);
-          background: rgba(13, 19, 32, 0.85);
-          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-          margin-bottom: 60px;
+          margin-bottom: 50px;
         }
 
         .contact-grid {
           display: grid;
-          grid-template-columns: 1.1fr 0.9fr;
-          gap: 48px;
+          grid-template-columns: 1.15fr 0.85fr;
+          gap: 44px;
           align-items: center;
         }
 
         .contact-title {
-          font-size: 2.2rem;
+          font-size: 2.1rem;
           color: var(--text-primary);
-          margin-bottom: 16px;
+          margin-bottom: 14px;
           line-height: 1.25;
         }
 
         .contact-desc {
           color: var(--text-secondary);
-          font-size: 1rem;
+          font-size: 0.98rem;
           line-height: 1.65;
-          margin-bottom: 28px;
+          margin-bottom: 24px;
+        }
+
+        .info-pills-list {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-bottom: 22px;
         }
 
         .email-copy-box {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          background: rgba(255, 255, 255, 0.03);
+          background: var(--badge-bg);
           border: 1px solid var(--border-subtle);
-          padding: 12px 18px;
+          padding: 10px 16px;
           border-radius: var(--radius-md);
-          margin-bottom: 20px;
-          transition: border-color 0.2s ease;
-        }
-
-        .email-copy-box:hover {
-          border-color: rgba(0, 242, 254, 0.4);
         }
 
         .email-text-wrap {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 10px;
         }
 
         .email-text {
           font-family: var(--font-mono);
-          font-size: 0.92rem;
+          font-size: 0.88rem;
           color: var(--text-primary);
         }
 
@@ -231,21 +261,21 @@ export default function ContactFooter() {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          background: rgba(255, 255, 255, 0.08);
+          background: var(--bg-primary);
           border: 1px solid var(--border-subtle);
           color: var(--text-primary);
-          padding: 6px 14px;
+          padding: 5px 12px;
           border-radius: var(--radius-full);
           cursor: pointer;
-          font-size: 0.82rem;
+          font-size: 0.78rem;
           font-family: var(--font-heading);
           font-weight: 600;
           transition: all 0.2s ease;
         }
 
         .copy-btn:hover {
-          background: rgba(255, 255, 255, 0.15);
           color: var(--accent-cyan);
+          border-color: var(--border-focus);
         }
 
         .copy-btn.copied {
@@ -254,10 +284,31 @@ export default function ContactFooter() {
           color: var(--accent-emerald);
         }
 
+        .contact-meta-row {
+          display: flex;
+          align-items: center;
+          gap: 18px;
+        }
+
+        .meta-item-link, .meta-item {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-family: var(--font-mono);
+          font-size: 0.85rem;
+          color: var(--text-secondary);
+          text-decoration: none;
+        }
+
+        .meta-item-link:hover {
+          color: var(--accent-emerald);
+        }
+
         .social-links-row {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 10px;
+          flex-wrap: wrap;
         }
 
         .social-btn {
@@ -266,32 +317,32 @@ export default function ContactFooter() {
           gap: 8px;
           color: var(--text-secondary);
           text-decoration: none;
-          font-size: 0.88rem;
+          font-size: 0.85rem;
           font-family: var(--font-mono);
           padding: 8px 16px;
           border-radius: var(--radius-sm);
-          background: rgba(255, 255, 255, 0.03);
+          background: var(--badge-bg);
           border: 1px solid var(--border-subtle);
           transition: all 0.2s ease;
         }
 
         .social-btn:hover {
           color: var(--text-primary);
-          border-color: rgba(255, 255, 255, 0.2);
-          background: rgba(255, 255, 255, 0.07);
+          border-color: var(--border-focus);
+          transform: translateY(-2px);
         }
 
         .contact-form-wrap {
-          background: rgba(18, 25, 42, 0.6);
+          background: var(--badge-bg);
           border: 1px solid var(--border-subtle);
           border-radius: var(--radius-md);
-          padding: 28px;
+          padding: 26px;
         }
 
         .form-title {
-          font-size: 1.2rem;
+          font-size: 1.15rem;
           color: var(--text-primary);
-          margin-bottom: 18px;
+          margin-bottom: 16px;
         }
 
         .quick-form {
@@ -303,24 +354,24 @@ export default function ContactFooter() {
         .form-group {
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 5px;
         }
 
         .form-group label {
-          font-size: 0.8rem;
+          font-size: 0.78rem;
           font-family: var(--font-mono);
           color: var(--text-muted);
         }
 
         .form-group input,
         .form-group textarea {
-          background: rgba(8, 12, 20, 0.7);
+          background: var(--bg-primary);
           border: 1px solid var(--border-subtle);
           border-radius: var(--radius-sm);
-          padding: 10px 14px;
+          padding: 9px 13px;
           color: var(--text-primary);
           font-family: var(--font-body);
-          font-size: 0.9rem;
+          font-size: 0.88rem;
           outline: none;
           transition: border-color 0.2s ease;
         }
@@ -328,11 +379,10 @@ export default function ContactFooter() {
         .form-group input:focus,
         .form-group textarea:focus {
           border-color: var(--border-focus);
-          box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
         }
 
         .form-submit-btn {
-          margin-top: 6px;
+          margin-top: 4px;
           width: 100%;
         }
 
@@ -341,41 +391,31 @@ export default function ContactFooter() {
           align-items: center;
           justify-content: space-between;
           border-top: 1px solid var(--border-subtle);
-          padding-top: 24px;
+          padding-top: 22px;
         }
 
         .footer-copyright {
-          font-size: 0.85rem;
+          font-size: 0.84rem;
           color: var(--text-muted);
-        }
-
-        .footer-copyright strong {
-          color: var(--text-secondary);
         }
 
         .footer-badges {
           display: flex;
           align-items: center;
           gap: 10px;
-          flex-wrap: wrap;
-        }
-
-        .footer-badge {
-          font-size: 0.75rem;
-          color: #94a3b8;
         }
 
         @media (max-width: 860px) {
           .contact-card {
-            padding: 28px;
+            padding: 26px;
           }
           .contact-grid {
             grid-template-columns: 1fr;
-            gap: 36px;
+            gap: 32px;
           }
           .footer-bottom {
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
             text-align: center;
           }
         }
