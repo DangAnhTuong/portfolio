@@ -37,6 +37,36 @@ export const CATEGORIES = [
 
 export const PROJECTS = [
   {
+    id: "tuong-tan-toeic",
+    title: "Tường Tận TOEIC – Comprehensive 4-Skill EdTech & Test Preparation Platform",
+    category: "fullstack",
+    featured: true,
+    role: "Full-stack Engineer | Flagship Production Project",
+    timeline: "Jan. 2026 – Production Live",
+    tagline: "Commercial-grade TOEIC exam ecosystem featuring SM-2 Spaced Repetition, real-time dictation diff engine, and full 200-question ETS mock exam rooms",
+    description: "Designed, engineered, and deployed an end-to-end 4-skill TOEIC preparation platform hosting 18,200 ETS practice questions, 11,785 dictation audio exercises, and 3,500+ Spaced Repetition vocabulary flashcards. Integrated Google 1-Click OAuth 2.0, automated VietQR payment webhooks, and zero-overflow native mobile UX. Deployed to Linux VPS with Nginx and SSL.",
+    techStack: ["React 18", "Node.js (Express)", "MongoDB", "TailwindCSS", "Vite", "JWT Auth", "Google OAuth 2.0", "Web Audio API", "VietQR", "Nginx", "Linux VPS"],
+    bullets: [
+      "4-Skill EdTech Ecosystem: Delivered 18,200 ETS questions with 4-part pedagogical explanations, 11,785 dictation audio sentences with live word-level diffing, and 83 SM-2 vocabulary topics.",
+      "High-Precision Audio & Exam Rooms: Engineered 100vh no-scroll ETS exam simulator with 200-question bubble sheets, single-sentence waveform audio streaming, and zero-spoil interactive blank inputs with auto-advance.",
+      "Secure Auth & Automated Monetization: Built 100% Google 1-Click OAuth 2.0 authentication, role-based access control (RBAC), and automated VietQR payment webhook integration for instant 120-day VIP membership provisioning.",
+      "Native Mobile UX & Production DevOps: Optimized mobile layouts with thumb-zone bottom navigation and off-canvas drawers; established an automated 5-step CI/CD pipeline deployed on Ubuntu VPS via Nginx reverse proxy with SSL."
+    ],
+    architecture: {
+      frontend: "React 18, Vite 5, TailwindCSS, Web Audio API, Native Speech API, Lucide React, Custom SM-2 Active Recall Engine",
+      backend: "Node.js Express API (v1), JWT RBAC Middleware, Google OAuth2 Token Verification, VietQR Webhook Listener",
+      database: "MongoDB & Mongoose (18,000+ indexed questions, full-text search, user progress tracking & mistake notebooks)",
+      devops: "Ubuntu Linux VPS, Nginx Reverse Proxy, Let's Encrypt SSL, PM2 Process Manager, Automated 5-Step CI/CD"
+    },
+    github: "https://github.com/DangAnhTuong/tuong_tan_toeic",
+    demo: "https://toeic.danganhtuong.dev",
+    isPrivate: true,
+    privateNotice: "Mã nguồn đang ở chế độ Private để bảo vệ tài nguyên đề thi. Sẵn sàng mời làm Collaborator/Viewer cho Nhà tuyển dụng quan tâm.",
+    badgeColor: "#3b82f6",
+    gradient: "linear-gradient(135deg, #1d4ed8 0%, #38bdf8 100%)"
+  },
+
+  {
     id: "ai-english",
     title: "AI-Powered English Learning Platform",
     category: "ai-data",
@@ -149,12 +179,12 @@ export const SKILLS_COMPETENCIES = [
   {
     category: "Frontend Development",
     icon: "Layout",
-    skills: ["React 19", "Next.js", "Three.js (@react-three/fiber)", "JavaScript (ES6+)", "HTML5", "CSS3", "Ant Design", "Bootstrap 5"]
+    skills: ["React 19 / 18", "Next.js", "TailwindCSS", "Three.js (@react-three/fiber)", "JavaScript (ES6+)", "HTML5", "CSS3", "Ant Design", "Web Audio API"]
   },
   {
     category: "Backend Development",
     icon: "Server",
-    skills: ["Node.js (Express)", "Python (FastAPI)", "RESTful APIs", "WebSockets", "Mongoose"]
+    skills: ["Node.js (Express)", "Python (FastAPI)", "RESTful APIs", "WebSockets", "Mongoose", "JWT Auth", "OAuth 2.0"]
   },
   {
     category: "Programming Languages",
@@ -174,7 +204,7 @@ export const SKILLS_COMPETENCIES = [
   {
     category: "DevOps & Cloud",
     icon: "Cloud",
-    skills: ["Docker", "Docker Compose", "Nginx Reverse Proxy", "Linux VPS", "Git", "GitHub", "Vercel", "Netlify"]
+    skills: ["Docker", "Docker Compose", "Nginx Reverse Proxy", "Linux VPS", "PM2", "Git", "GitHub", "Vercel", "Netlify"]
   },
   {
     category: "Foreign Languages",

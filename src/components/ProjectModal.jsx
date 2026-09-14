@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, ExternalLink, Github, CheckCircle2, Server, Layout, Database, Terminal, ShieldCheck } from 'lucide-react';
+import { X, ExternalLink, Github, CheckCircle2, Server, Layout, Database, Terminal, ShieldCheck, Lock } from 'lucide-react';
 
 export default function ProjectModal({ project, onClose }) {
   useEffect(() => {
@@ -40,6 +40,17 @@ export default function ProjectModal({ project, onClose }) {
             <h4 className="modal-section-title">Overview & Purpose</h4>
             <p className="modal-text">{project.description}</p>
           </div>
+
+          {/* Private Repository Notice */}
+          {project.privateNotice && (
+            <div className="private-notice-banner">
+              <Lock size={20} color="var(--accent-amber)" className="private-banner-icon" />
+              <div className="private-banner-text">
+                <span className="banner-title">Mã nguồn & Quyền truy cập:</span>
+                <p>{project.privateNotice}</p>
+              </div>
+            </div>
+          )}
 
           {/* Key Deliverables & Technical Highlights (Strict from CV) */}
           <div className="modal-section">
@@ -121,9 +132,16 @@ export default function ProjectModal({ project, onClose }) {
 
         {/* Footer Actions */}
         <div className="modal-footer">
-          <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+          <a 
+            href={project.github} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="btn btn-secondary"
+            title={project.privateNotice || "View Source Code"}
+          >
             <Github size={17} />
-            <span>View Source Code</span>
+            <span>{project.isPrivate ? "GitHub (Private Repo)" : "View Source Code"}</span>
+            {project.isPrivate && <Lock size={14} color="var(--accent-amber)" style={{ marginLeft: 4 }} />}
           </a>
           <a href={project.demo} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
             <ExternalLink size={17} />
@@ -224,6 +242,43 @@ export default function ProjectModal({ project, onClose }) {
           color: var(--text-secondary);
           font-size: 0.95rem;
           line-height: 1.65;
+        }
+
+        .private-notice-banner {
+          display: flex;
+          align-items: flex-start;
+          gap: 12px;
+          background: rgba(245, 158, 11, 0.08);
+          border: 1px solid rgba(245, 158, 11, 0.28);
+          padding: 14px 16px;
+          border-radius: var(--radius-md);
+        }
+
+        .private-banner-icon {
+          flex-shrink: 0;
+          margin-top: 3px;
+        }
+
+        .private-banner-text {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .banner-title {
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: #f59e0b;
+          font-family: var(--font-mono);
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        .private-banner-text p {
+          font-size: 0.88rem;
+          color: #fef3c7;
+          line-height: 1.5;
+          margin: 0;
         }
 
         .highlights-list {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Github, Info, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ExternalLink, Github, Info, Sparkles, CheckCircle2, Lock } from 'lucide-react';
 import { PROJECTS, CATEGORIES } from '../data/projects';
 import ProjectModal from './ProjectModal';
 
@@ -89,6 +89,14 @@ export default function ProjectShowcase() {
                   )}
                 </div>
 
+                {/* Private Repo Notice */}
+                {project.privateNotice && (
+                  <div className="card-private-hint">
+                    <Lock size={13} color="var(--accent-amber)" />
+                    <span>{project.privateNotice}</span>
+                  </div>
+                )}
+
                 {/* Card Actions */}
                 <div className="card-actions">
                   <button 
@@ -105,7 +113,7 @@ export default function ProjectShowcase() {
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="icon-action-btn"
-                      title="View GitHub Repository"
+                      title={project.privateNotice || "View GitHub Repository"}
                     >
                       <Github size={17} />
                     </a>
@@ -277,6 +285,20 @@ export default function ProjectShowcase() {
           background: rgba(99, 102, 241, 0.1);
           color: var(--accent-indigo);
           border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .card-private-hint {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.76rem;
+          color: #fbbf24;
+          background: rgba(245, 158, 11, 0.08);
+          border: 1px solid rgba(245, 158, 11, 0.25);
+          padding: 7px 12px;
+          border-radius: var(--radius-sm);
+          margin-top: 14px;
+          line-height: 1.4;
         }
 
         .card-actions {
