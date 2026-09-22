@@ -6,7 +6,8 @@ import { PROFILE } from '../data/projects';
 export default function ContactFooter() {
   const [copied, setCopied] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [sentStatus, setSentStatus] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitResult, setSubmitResult] = useState(null);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(PROFILE.email);
@@ -22,12 +23,50 @@ export default function ContactFooter() {
     setTimeout(() => setCopied(false), 3000);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const mailtoUrl = `mailto:${PROFILE.email}?subject=Project / Internship Inquiry from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message + '\n\nSender Contact: ' + formData.email)}`;
-    window.location.href = mailtoUrl;
-    setSentStatus(true);
-    setTimeout(() => setSentStatus(false), 4000);
+    setIsSubmitting(true);
+    setSubmitResult(null);
+
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${PROFILE.email}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `New Portfolio Message from ${formData.name} (${formData.email})`,
+          _template: 'table'
+        })
+      });
+
+      const data = await response.json();
+      if (response.ok || data.success === 'true') {
+        setSubmitResult({ success: true, message: 'Message dispatched successfully! I will reply to your email shortly.' });
+        setFormData({ name: '', email: '', message: '' });
+        confetti({
+          particleCount: 60,
+          spread: 70,
+          origin: { y: 0.8 },
+          colors: ['#0ea5e9', '#6366f1', '#10b981', '#ffffff']
+        });
+      } else {
+        throw new Error(data.message || 'Failed to submit');
+      }
+    } catch (err) {
+      console.error('Contact form error:', err);
+      // Fallback: mailto
+      const mailtoUrl = `mailto:${PROFILE.email}?subject=Inquiry from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message + '\n\nSender Contact: ' + formData.email)}`;
+      window.location.href = mailtoUrl;
+      setSubmitResult({ success: true, message: 'Opening your default mail client...' });
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitResult(null), 8000);
+    }
   };
 
   return (
@@ -164,10 +203,25 @@ export default function ContactFooter() {
                   ></textarea>
                 </div>
 
-                <button type="submit" className="btn btn-primary form-submit-btn">
+                <button type="submit" className="btn btn-primary form-submit-btn" disabled={isSubmitting}>
                   <Send size={15} />
-                  <span>{sentStatus ? 'Opening Mail Client...' : 'Dispatch Message'}</span>
+                  <span>{isSubmitting ? 'Sending Message...' : 'Dispatch Message'}</span>
                 </button>
+
+                {submitResult && (
+                  <div style={{
+                    marginTop: '12px',
+                    padding: '10px 14px',
+                    borderRadius: '8px',
+                    fontSize: '13px',
+                    fontWeight: '500',
+                    backgroundColor: submitResult.success ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
+                    color: submitResult.success ? '#10b981' : '#ef4444',
+                    border: `1px solid ${submitResult.success ? '#10b981' : '#ef4444'}`
+                  }}>
+                    {submitResult.message}
+                  </div>
+                )}
               </form>
             </div>
           </div>
