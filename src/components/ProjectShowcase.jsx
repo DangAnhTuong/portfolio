@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Github, Info, Sparkles, CheckCircle2, Lock } from 'lucide-react';
+import { ExternalLink, Github, Info, Sparkles, CheckCircle2, Lock, Eye, ArrowUpRight, Zap } from 'lucide-react';
 import { PROJECTS, CATEGORIES } from '../data/projects';
 import ProjectModal from './ProjectModal';
 
@@ -18,7 +18,7 @@ export default function ProjectShowcase() {
         <div className="section-header">
           <span className="section-tag">Featured Engineering</span>
           <h2 className="section-title">
-            Production & Personal <span className="text-gradient">Projects</span>
+            Production &amp; Personal <span className="text-gradient">Projects</span>
           </h2>
           <p className="section-desc">
             Decoupled microservices, real-time AI audio streaming, and high-fidelity 3D WebGL interfaces built with verified engineering standards.
@@ -48,6 +48,27 @@ export default function ProjectShowcase() {
                 style={{ background: project.gradient }}
               />
 
+              {/* Visual Project Mockup Frame */}
+              {project.image && (
+                <div 
+                  className="project-mockup-wrapper"
+                  onClick={() => setSelectedProject(project)}
+                  title="Click to view full architecture & design"
+                >
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    className="project-mockup-img"
+                    loading="lazy"
+                  />
+                  <div className="mockup-hover-overlay">
+                    <span className="overlay-pill">
+                      <Eye size={14} /> Quick Architecture
+                    </span>
+                  </div>
+                </div>
+              )}
+
               <div className="card-content">
                 {/* Meta Row */}
                 <div className="card-meta">
@@ -66,6 +87,18 @@ export default function ProjectShowcase() {
                 <h3 className="project-title">{project.title}</h3>
                 <p className="project-role">{project.role}</p>
                 <p className="project-tagline">{project.tagline}</p>
+
+                {/* Production Metrics Row */}
+                {project.metrics && (
+                  <div className="project-metrics-row">
+                    {project.metrics.map((metric, mIdx) => (
+                      <span key={mIdx} className="metric-pill">
+                        <Zap size={11} color="var(--accent-amber)" />
+                        <span>{metric}</span>
+                      </span>
+                    ))}
+                  </div>
+                )}
 
                 {/* Bullet Points from CV */}
                 <div className="project-bullets">
@@ -122,7 +155,7 @@ export default function ProjectShowcase() {
                       href={project.demo} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="icon-action-btn"
+                      className="icon-action-btn primary-action"
                       title="Open Live Preview"
                     >
                       <ExternalLink size={17} />
@@ -159,16 +192,15 @@ export default function ProjectShowcase() {
         }
 
         .filter-btn {
-          padding: 8px 20px;
+          padding: 8px 18px;
           border-radius: var(--radius-full);
-          font-family: var(--font-heading);
           font-size: 0.88rem;
           font-weight: 600;
-          color: var(--text-secondary);
-          background: var(--badge-bg);
+          background: var(--bg-card);
           border: 1px solid var(--border-subtle);
+          color: var(--text-secondary);
           cursor: pointer;
-          transition: all 0.25s ease;
+          transition: all 0.2s ease;
         }
 
         .filter-btn:hover {
@@ -177,16 +209,16 @@ export default function ProjectShowcase() {
         }
 
         .filter-btn.active {
-          background: var(--gradient-brand);
+          background: var(--accent-cyan);
+          border-color: var(--accent-cyan);
           color: #ffffff;
-          border-color: transparent;
-          box-shadow: 0 4px 18px rgba(14, 165, 233, 0.3);
+          box-shadow: 0 0 15px rgba(14, 165, 233, 0.35);
         }
 
         .projects-grid {
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 26px;
+          grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+          gap: 28px;
         }
 
         .project-card {
@@ -195,124 +227,224 @@ export default function ProjectShowcase() {
           overflow: hidden;
           display: flex;
           flex-direction: column;
+          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
           border: 1px solid var(--border-subtle);
+          background: var(--bg-card);
+        }
+
+        .project-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 25px rgba(14, 165, 233, 0.12);
+          border-color: rgba(14, 165, 233, 0.35);
         }
 
         .card-glow-bar {
-          height: 4px;
+          height: 3px;
           width: 100%;
         }
 
+        /* Mockup Frame */
+        .project-mockup-wrapper {
+          position: relative;
+          width: 100%;
+          height: 250px;
+          overflow: hidden;
+          background: #090e17;
+          border-bottom: 1px solid var(--border-subtle);
+          cursor: pointer;
+        }
+
+        .project-mockup-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
+          transition: transform 0.4s ease;
+        }
+
+        .project-card:hover .project-mockup-img {
+          transform: scale(1.03);
+        }
+
+        .mockup-hover-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(4, 7, 13, 0.45);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: opacity 0.25s ease;
+        }
+
+        .project-mockup-wrapper:hover .mockup-hover-overlay {
+          opacity: 1;
+        }
+
+        .overlay-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 8px 16px;
+          border-radius: var(--radius-full);
+          font-size: 0.82rem;
+          font-weight: 700;
+          background: rgba(14, 165, 233, 0.9);
+          color: #ffffff;
+          backdrop-filter: blur(8px);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
         .card-content {
-          padding: 28px;
+          padding: 26px 28px;
           display: flex;
           flex-direction: column;
-          flex-grow: 1;
+          flex: 1;
+          gap: 14px;
         }
 
         .card-meta {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 12px;
+          gap: 10px;
+        }
+
+        .category-badge {
+          font-size: 0.72rem;
+          font-weight: 700;
+          font-family: var(--font-mono);
+          letter-spacing: 0.05em;
+          padding: 3px 8px;
+          border-radius: 4px;
+          border-width: 1px;
+          border-style: solid;
+          background: transparent;
         }
 
         .timeline-pill {
           font-family: var(--font-mono);
-          font-size: 0.74rem;
+          font-size: 0.78rem;
           color: var(--text-muted);
         }
 
         .project-title {
           font-size: 1.35rem;
+          font-weight: 800;
+          line-height: 1.3;
           color: var(--text-primary);
-          margin-bottom: 4px;
-          font-weight: 700;
         }
 
         .project-role {
+          font-size: 0.84rem;
           font-family: var(--font-mono);
-          font-size: 0.78rem;
           color: var(--accent-cyan);
-          margin-bottom: 8px;
+          font-weight: 600;
+          margin-top: -8px;
         }
 
         .project-tagline {
-          font-size: 0.9rem;
+          font-size: 0.94rem;
           color: var(--text-secondary);
-          line-height: 1.5;
-          margin-bottom: 18px;
+          line-height: 1.55;
+        }
+
+        /* Production Metrics Row */
+        .project-metrics-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 7px;
+          margin: 2px 0;
+        }
+
+        .metric-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          padding: 4px 10px;
+          border-radius: 6px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          font-family: var(--font-mono);
+          background: rgba(245, 158, 11, 0.08);
+          border: 1px solid rgba(245, 158, 11, 0.25);
+          color: var(--text-primary);
         }
 
         .project-bullets {
           display: flex;
           flex-direction: column;
-          gap: 8px;
-          margin-bottom: 20px;
-          flex-grow: 1;
+          gap: 9px;
+          margin: 4px 0;
         }
 
         .bullet-row {
           display: flex;
           align-items: flex-start;
           gap: 8px;
-          font-size: 0.85rem;
+          font-size: 0.88rem;
           color: var(--text-secondary);
-          line-height: 1.45;
+          line-height: 1.5;
         }
 
         .bullet-icon {
           flex-shrink: 0;
-          margin-top: 2px;
+          margin-top: 3px;
         }
 
         .project-tags {
           display: flex;
           flex-wrap: wrap;
           gap: 6px;
-          margin-bottom: 22px;
+          margin-top: auto;
+          padding-top: 10px;
         }
 
         .tag-pill {
-          font-size: 0.74rem;
+          font-size: 0.76rem;
+          font-family: var(--font-mono);
           background: var(--badge-bg);
-          border-color: var(--badge-border);
+          border: 1px solid var(--border-subtle);
           color: var(--text-secondary);
+          padding: 3px 9px;
         }
 
         .tag-pill-more {
           font-size: 0.74rem;
-          background: rgba(99, 102, 241, 0.1);
-          color: var(--accent-indigo);
-          border-color: rgba(99, 102, 241, 0.3);
+          font-family: var(--font-mono);
+          background: var(--badge-bg);
+          color: var(--accent-cyan);
+          border: 1px solid rgba(14, 165, 233, 0.3);
+          padding: 3px 8px;
         }
 
         .card-private-hint {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 6px;
           font-size: 0.76rem;
-          color: #fbbf24;
+          color: var(--accent-amber);
           background: rgba(245, 158, 11, 0.08);
-          border: 1px solid rgba(245, 158, 11, 0.25);
-          padding: 7px 12px;
+          border: 1px dashed rgba(245, 158, 11, 0.3);
+          padding: 6px 10px;
           border-radius: var(--radius-sm);
-          margin-top: 14px;
-          line-height: 1.4;
         }
 
         .card-actions {
           display: flex;
           align-items: center;
           justify-content: space-between;
+          gap: 12px;
+          padding-top: 14px;
           border-top: 1px solid var(--border-subtle);
-          padding-top: 18px;
-          margin-top: auto;
+          margin-top: 8px;
         }
 
         .card-btn {
-          padding: 8px 16px;
-          font-size: 0.84rem;
+          flex: 1;
+          justify-content: center;
+          font-size: 0.85rem;
+          padding: 8px 14px;
         }
 
         .action-links {
@@ -322,28 +454,46 @@ export default function ProjectShowcase() {
         }
 
         .icon-action-btn {
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          background: var(--badge-bg);
+          width: 38px;
+          height: 38px;
+          border-radius: var(--radius-sm);
+          background: var(--bg-secondary);
           border: 1px solid var(--border-subtle);
-          color: var(--text-secondary);
-          text-decoration: none;
+          color: var(--text-primary);
           transition: all 0.2s ease;
+          text-decoration: none;
         }
 
         .icon-action-btn:hover {
-          color: var(--text-primary);
+          background: var(--border-subtle);
+          color: var(--accent-cyan);
           border-color: var(--border-focus);
           transform: translateY(-2px);
         }
 
-        @media (max-width: 860px) {
+        .icon-action-btn.primary-action {
+          background: var(--accent-cyan);
+          border-color: var(--accent-cyan);
+          color: #ffffff;
+        }
+
+        .icon-action-btn.primary-action:hover {
+          filter: brightness(1.1);
+          box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+        }
+
+        @media (max-width: 768px) {
           .projects-grid {
             grid-template-columns: 1fr;
+          }
+          .project-mockup-wrapper {
+            height: 200px;
+          }
+          .card-content {
+            padding: 20px;
           }
         }
       `}</style>

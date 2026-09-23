@@ -1,14 +1,14 @@
 import React from 'react';
-import { GraduationCap, Award, Globe2, Bot, Mail, Phone, MapPin, ExternalLink, Download } from 'lucide-react';
+import { GraduationCap, Award, Globe2, Bot, Mail, Phone, MapPin, ExternalLink, Download, Eye, BookOpen } from 'lucide-react';
 import { PROFILE } from '../data/projects';
 
-export default function AboutMe() {
+export default function AboutMe({ onOpenCv }) {
   return (
     <section id="about" className="about-section">
       <div className="container">
         {/* Header */}
         <div className="section-header">
-          <span className="section-tag">Background & Identity</span>
+          <span className="section-tag">Background &amp; Identity</span>
           <h2 className="section-title">
             About <span className="text-gradient">Dang Anh Tuong</span>
           </h2>
@@ -51,6 +51,22 @@ export default function AboutMe() {
                   <span className="edu-school">Languages: {PROFILE.education.nativeLang}, English (Certified B1)</span>
                 </div>
               </div>
+
+              {/* Relevant Coursework */}
+              <div className="coursework-box">
+                <div className="coursework-title">
+                  <BookOpen size={14} color="var(--accent-cyan)" />
+                  <span>Relevant Coursework:</span>
+                </div>
+                <div className="coursework-tags">
+                  <span className="course-tag">Data Structures &amp; Algorithms</span>
+                  <span className="course-tag">Object-Oriented Programming (OOP)</span>
+                  <span className="course-tag">Database Systems (DBMS)</span>
+                  <span className="course-tag">Web Application Development</span>
+                  <span className="course-tag">Software Engineering</span>
+                  <span className="course-tag">Computer Networks</span>
+                </div>
+              </div>
             </div>
 
             {/* Direct Contact Pills */}
@@ -85,24 +101,33 @@ export default function AboutMe() {
 
               <div className="point-item">
                 <span className="point-badge">Real-World Execution</span>
-                <p>Proven track record building microservices with <strong>Node.js & Python FastAPI</strong>, audio streaming via WebSockets, and 3D WebGL rendering with <strong>Three.js</strong>.</p>
+                <p>Proven track record building microservices with <strong>Node.js &amp; Python FastAPI</strong>, audio streaming via WebSockets, and 3D WebGL rendering with <strong>Three.js</strong>.</p>
               </div>
 
               <div className="point-item">
-                <span className="point-badge">Clean & Honest Code</span>
-                <p>No artificial inflation of skillsets: commitment to code precision, zero-cache HTTP delivery, and reliable cloud deployments.</p>
+                <span className="point-badge">Coachable &amp; Reliable</span>
+                <p>Eager to learn from senior engineers through rigorous code reviews. Ready to dedicate 100% commitment to write clean, reliable production code.</p>
               </div>
             </div>
 
             <div className="about-actions">
+              <button 
+                onClick={onOpenCv}
+                className="btn btn-primary btn-sm"
+                title="Preview Official 1-Page Resume (PDF)"
+              >
+                <Eye size={15} />
+                <span>Preview Resume Online</span>
+              </button>
+
               <a 
                 href={PROFILE.cvUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="btn btn-primary btn-sm"
+                download="Dang_Anh_Tuong_CV.pdf"
+                className="btn btn-secondary btn-sm"
+                title="Download official PDF file"
               >
                 <Download size={15} />
-                <span>Download Resume (PDF)</span>
+                <span>Download PDF</span>
               </a>
 
               <a 
@@ -112,7 +137,7 @@ export default function AboutMe() {
                 className="btn btn-secondary btn-sm"
               >
                 <ExternalLink size={15} />
-                <span>LinkedIn Profile</span>
+                <span>LinkedIn</span>
               </a>
             </div>
           </div>
@@ -159,78 +184,113 @@ export default function AboutMe() {
         }
 
         .card-title {
-          font-size: 1.25rem;
-          color: var(--text-primary);
+          font-size: 1.15rem;
+          font-weight: 700;
+          line-height: 1.2;
         }
 
         .card-subtitle {
-          font-size: 0.85rem;
+          font-family: var(--font-mono);
+          font-size: 0.78rem;
           color: var(--text-muted);
         }
 
         .education-timeline {
           display: flex;
           flex-direction: column;
-          gap: 20px;
-          position: relative;
-          padding-left: 18px;
-        }
-
-        .education-timeline::before {
-          content: '';
-          position: absolute;
-          left: 5px;
-          top: 8px;
-          bottom: 8px;
-          width: 2px;
-          background: var(--border-subtle);
+          gap: 18px;
         }
 
         .edu-item {
-          position: relative;
+          display: flex;
+          gap: 14px;
         }
 
         .edu-dot {
-          position: absolute;
-          left: -18px;
-          top: 6px;
-          width: 10px;
-          height: 10px;
+          width: 9px;
+          height: 9px;
           border-radius: 50%;
           background: var(--accent-cyan);
+          margin-top: 6px;
           box-shadow: 0 0 8px var(--accent-cyan);
+          flex-shrink: 0;
         }
 
         .edu-content {
           display: flex;
           flex-direction: column;
-          gap: 4px;
+          gap: 3px;
         }
 
         .edu-degree {
-          font-size: 1rem;
+          font-size: 0.96rem;
           font-weight: 700;
           color: var(--text-primary);
         }
 
         .edu-school {
-          font-size: 0.88rem;
+          font-size: 0.85rem;
           color: var(--text-secondary);
         }
 
         .edu-time {
           font-family: var(--font-mono);
           font-size: 0.78rem;
-          color: var(--accent-cyan);
+          color: var(--text-muted);
         }
 
         .cert-pill {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          font-size: 0.88rem;
+          padding: 4px 10px;
+          border-radius: var(--radius-full);
+          font-size: 0.78rem;
           font-weight: 600;
+          background: rgba(16, 185, 129, 0.1);
+          border: 1px solid rgba(16, 185, 129, 0.25);
           color: var(--accent-emerald);
+          width: fit-content;
+          margin-bottom: 2px;
+        }
+
+        /* Coursework Box */
+        .coursework-box {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          padding: 14px;
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-subtle);
+          border-radius: var(--radius-sm);
+        }
+
+        .coursework-title {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.78rem;
+          font-family: var(--font-mono);
+          font-weight: 700;
+          color: var(--text-primary);
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+        }
+
+        .coursework-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+
+        .course-tag {
+          font-size: 0.74rem;
+          font-family: var(--font-mono);
+          padding: 3px 8px;
+          border-radius: 4px;
+          background: var(--badge-bg);
+          border: 1px solid var(--border-subtle);
+          color: var(--text-secondary);
         }
 
         .contact-pills-row {
@@ -243,9 +303,9 @@ export default function AboutMe() {
         }
 
         .philosophy-text {
-          font-size: 0.95rem;
+          font-size: 0.94rem;
           color: var(--text-secondary);
-          line-height: 1.65;
+          line-height: 1.6;
         }
 
         .workflow-points {
@@ -264,7 +324,7 @@ export default function AboutMe() {
           font-family: var(--font-mono);
           font-size: 0.76rem;
           font-weight: 700;
-          color: var(--accent-cyan);
+          color: var(--accent-indigo);
           text-transform: uppercase;
         }
 
@@ -277,11 +337,14 @@ export default function AboutMe() {
         .about-actions {
           display: flex;
           align-items: center;
-          gap: 12px;
-          margin-top: 8px;
+          gap: 10px;
+          flex-wrap: wrap;
+          margin-top: auto;
+          padding-top: 14px;
+          border-top: 1px solid var(--border-subtle);
         }
 
-        @media (max-width: 860px) {
+        @media (max-width: 900px) {
           .about-grid {
             grid-template-columns: 1fr;
           }

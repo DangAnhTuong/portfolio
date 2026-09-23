@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, ExternalLink, Github, CheckCircle2, Server, Layout, Database, Terminal, ShieldCheck, Lock } from 'lucide-react';
+import { X, ExternalLink, Github, CheckCircle2, Server, Layout, Database, Terminal, ShieldCheck, Lock, ArrowRight, Layers, Cpu } from 'lucide-react';
 
 export default function ProjectModal({ project, onClose }) {
   useEffect(() => {
@@ -37,16 +37,42 @@ export default function ProjectModal({ project, onClose }) {
         <div className="modal-body">
           {/* Summary */}
           <div className="modal-section">
-            <h4 className="modal-section-title">Overview & Purpose</h4>
+            <h4 className="modal-section-title">Overview &amp; Purpose</h4>
             <p className="modal-text">{project.description}</p>
           </div>
+
+          {/* Interactive System Architecture Flowchart */}
+          {project.architectureFlow && (
+            <div className="modal-section">
+              <h4 className="modal-section-title">
+                <Layers size={17} color="var(--accent-cyan)" style={{ display: 'inline', marginRight: 6 }} />
+                End-to-End System Architecture Pipeline
+              </h4>
+              <div className="flowchart-container">
+                {project.architectureFlow.map((node, fIdx) => (
+                  <React.Fragment key={fIdx}>
+                    <div className="flowchart-node">
+                      <div className="node-step-tag">{node.step}</div>
+                      <div className="node-title">{node.name}</div>
+                      <div className="node-desc">{node.desc}</div>
+                    </div>
+                    {fIdx < project.architectureFlow.length - 1 && (
+                      <div className="flowchart-connector">
+                        <ArrowRight size={16} className="connector-arrow" />
+                      </div>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Private Repository Notice */}
           {project.privateNotice && (
             <div className="private-notice-banner">
               <Lock size={20} color="var(--accent-amber)" className="private-banner-icon" />
               <div className="private-banner-text">
-                <span className="banner-title">Mã nguồn & Quyền truy cập:</span>
+                <span className="banner-title">Mã nguồn &amp; Quyền truy cập:</span>
                 <p>{project.privateNotice}</p>
               </div>
             </div>
@@ -65,9 +91,9 @@ export default function ProjectModal({ project, onClose }) {
             </div>
           </div>
 
-          {/* Architecture Mapping */}
+          {/* Architecture Layers Mapping */}
           <div className="modal-section">
-            <h4 className="modal-section-title">System Architecture Layers</h4>
+            <h4 className="modal-section-title">System Architecture Breakdown</h4>
             <div className="arch-grid">
               {project.architecture.frontend && (
                 <div className="arch-card">
@@ -91,7 +117,7 @@ export default function ProjectModal({ project, onClose }) {
                 <div className="arch-card">
                   <div className="arch-head">
                     <Database size={15} color="var(--accent-emerald)" />
-                    <span>Database & Caching</span>
+                    <span>Database &amp; Caching</span>
                   </div>
                   <p>{project.architecture.database}</p>
                 </div>
@@ -100,7 +126,7 @@ export default function ProjectModal({ project, onClose }) {
                 <div className="arch-card">
                   <div className="arch-head">
                     <Terminal size={15} color="var(--accent-amber)" />
-                    <span>DevOps & Deployment</span>
+                    <span>DevOps &amp; Infrastructure</span>
                   </div>
                   <p>{project.architecture.devops}</p>
                 </div>
@@ -109,7 +135,7 @@ export default function ProjectModal({ project, onClose }) {
                 <div className="arch-card">
                   <div className="arch-head">
                     <ShieldCheck size={15} color="var(--accent-cyan)" />
-                    <span>3D Graphics & Engine</span>
+                    <span>3D Graphics &amp; Engine</span>
                   </div>
                   <p>{project.architecture.core}</p>
                 </div>
@@ -157,128 +183,169 @@ export default function ProjectModal({ project, onClose }) {
           left: 0;
           right: 0;
           bottom: 0;
-          background: rgba(4, 7, 13, 0.75);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          z-index: 2000;
+          background: rgba(4, 7, 13, 0.82);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          z-index: 1000;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 24px;
-          animation: fadeIn 0.2s ease;
+          padding: 20px;
+          animation: modalFadeIn 0.25s ease;
         }
 
         .modal-content {
           width: 100%;
-          max-width: 740px;
+          max-width: 900px;
           max-height: 90vh;
-          overflow-y: auto;
           background: var(--bg-card);
           border: 1px solid var(--border-subtle);
           border-radius: var(--radius-lg);
-          padding: 32px;
           display: flex;
           flex-direction: column;
-          gap: 22px;
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+          overflow: hidden;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
         }
 
         .modal-header {
           display: flex;
           align-items: flex-start;
           justify-content: space-between;
+          padding: 24px 28px;
           border-bottom: 1px solid var(--border-subtle);
-          padding-bottom: 16px;
+          gap: 16px;
         }
 
         .modal-title {
-          font-size: 1.5rem;
-          color: var(--text-primary);
-          margin-top: 6px;
+          font-size: 1.45rem;
+          font-weight: 800;
+          margin: 6px 0 2px;
+          line-height: 1.25;
         }
 
         .modal-role {
-          font-size: 0.9rem;
-          color: var(--accent-cyan);
           font-family: var(--font-mono);
-          margin-top: 2px;
+          font-size: 0.82rem;
+          color: var(--accent-cyan);
         }
 
         .modal-close-btn {
-          background: var(--badge-bg);
-          border: 1px solid var(--border-subtle);
+          background: transparent;
+          border: none;
           color: var(--text-secondary);
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
           cursor: pointer;
+          padding: 4px;
+          border-radius: 4px;
           transition: all 0.2s ease;
         }
 
         .modal-close-btn:hover {
           color: var(--text-primary);
-          border-color: var(--border-focus);
+          background: var(--badge-bg);
         }
 
         .modal-body {
+          padding: 28px;
+          overflow-y: auto;
           display: flex;
           flex-direction: column;
-          gap: 20px;
+          gap: 26px;
         }
 
         .modal-section-title {
-          font-size: 0.85rem;
-          font-family: var(--font-mono);
+          font-size: 0.95rem;
           text-transform: uppercase;
-          color: var(--accent-cyan);
-          letter-spacing: 0.08em;
-          margin-bottom: 8px;
+          letter-spacing: 0.05em;
+          color: var(--text-primary);
+          margin-bottom: 12px;
+          font-weight: 700;
+          display: flex;
+          align-items: center;
         }
 
         .modal-text {
+          font-size: 0.94rem;
           color: var(--text-secondary);
-          font-size: 0.95rem;
           line-height: 1.65;
+        }
+
+        /* Flowchart Styles */
+        .flowchart-container {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          overflow-x: auto;
+          padding: 14px 4px 18px;
+        }
+
+        .flowchart-node {
+          flex: 1;
+          min-width: 145px;
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-subtle);
+          border-radius: var(--radius-sm);
+          padding: 12px 14px;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .flowchart-node:hover {
+          border-color: var(--accent-cyan);
+          transform: translateY(-2px);
+        }
+
+        .node-step-tag {
+          font-size: 0.68rem;
+          font-family: var(--font-mono);
+          text-transform: uppercase;
+          font-weight: 700;
+          color: var(--accent-cyan);
+        }
+
+        .node-title {
+          font-size: 0.88rem;
+          font-weight: 700;
+          color: var(--text-primary);
+        }
+
+        .node-desc {
+          font-size: 0.76rem;
+          color: var(--text-secondary);
+          line-height: 1.35;
+        }
+
+        .flowchart-connector {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--accent-cyan);
+          opacity: 0.8;
+          flex-shrink: 0;
         }
 
         .private-notice-banner {
           display: flex;
           align-items: flex-start;
           gap: 12px;
+          padding: 12px 16px;
+          border-radius: var(--radius-sm);
           background: rgba(245, 158, 11, 0.08);
-          border: 1px solid rgba(245, 158, 11, 0.28);
-          padding: 14px 16px;
-          border-radius: var(--radius-md);
-        }
-
-        .private-banner-icon {
-          flex-shrink: 0;
-          margin-top: 3px;
+          border: 1px dashed rgba(245, 158, 11, 0.35);
         }
 
         .private-banner-text {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
+          font-size: 0.85rem;
+          color: var(--text-secondary);
+          line-height: 1.5;
         }
 
         .banner-title {
-          font-size: 0.85rem;
-          font-weight: 600;
-          color: #f59e0b;
-          font-family: var(--font-mono);
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-
-        .private-banner-text p {
-          font-size: 0.88rem;
-          color: #fef3c7;
-          line-height: 1.5;
-          margin: 0;
+          font-weight: 700;
+          color: var(--accent-amber);
+          margin-right: 6px;
         }
 
         .highlights-list {
@@ -292,48 +359,49 @@ export default function ProjectModal({ project, onClose }) {
           align-items: flex-start;
           gap: 10px;
           font-size: 0.9rem;
-          color: var(--text-primary);
-          line-height: 1.5;
+          color: var(--text-secondary);
+          line-height: 1.55;
         }
 
         .highlight-icon {
           flex-shrink: 0;
-          margin-top: 3px;
+          margin-top: 2px;
         }
 
         .arch-grid {
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 10px;
+          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          gap: 14px;
         }
 
         .arch-card {
-          background: var(--badge-bg);
+          background: var(--bg-secondary);
           border: 1px solid var(--border-subtle);
-          padding: 12px;
           border-radius: var(--radius-sm);
+          padding: 14px 16px;
         }
 
         .arch-head {
           display: flex;
           align-items: center;
-          gap: 7px;
-          font-size: 0.82rem;
-          font-weight: 600;
+          gap: 8px;
+          font-family: var(--font-mono);
+          font-size: 0.8rem;
+          font-weight: 700;
           color: var(--text-primary);
-          margin-bottom: 4px;
+          margin-bottom: 6px;
         }
 
         .arch-card p {
-          font-size: 0.8rem;
-          color: var(--text-muted);
-          line-height: 1.4;
+          font-size: 0.82rem;
+          color: var(--text-secondary);
+          line-height: 1.45;
         }
 
         .tags-container {
           display: flex;
           flex-wrap: wrap;
-          gap: 7px;
+          gap: 8px;
         }
 
         .modal-footer {
@@ -341,19 +409,30 @@ export default function ProjectModal({ project, onClose }) {
           align-items: center;
           justify-content: flex-end;
           gap: 12px;
+          padding: 18px 28px;
           border-top: 1px solid var(--border-subtle);
-          padding-top: 18px;
+          background: var(--bg-secondary);
         }
 
-        @media (max-width: 640px) {
-          .arch-grid {
-            grid-template-columns: 1fr;
+        @keyframes modalFadeIn {
+          from { opacity: 0; transform: scale(0.96); }
+          to { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+          .modal-content {
+            max-height: 95vh;
           }
-          .modal-footer {
+          .modal-header, .modal-body, .modal-footer {
+            padding: 18px;
+          }
+          .flowchart-container {
             flex-direction: column;
+            align-items: stretch;
           }
-          .modal-footer .btn {
-            width: 100%;
+          .flowchart-connector {
+            transform: rotate(90deg);
+            padding: 4px 0;
           }
         }
       `}</style>

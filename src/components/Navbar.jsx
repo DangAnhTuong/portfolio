@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Terminal, Sun, Moon, FileText, Menu, X } from 'lucide-react';
+import { Terminal, Sun, Moon, FileText, Menu, X, Sparkles } from 'lucide-react';
 import { PROFILE } from '../data/projects';
 
-export default function Navbar({ theme, toggleTheme }) {
+export default function Navbar({ theme, toggleTheme, onOpenCv }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -28,12 +28,17 @@ export default function Navbar({ theme, toggleTheme }) {
           </div>
         </a>
 
-        {/* 4 Standard Navigation Tabs */}
+        {/* 4 Standard Navigation Tabs + Availability Pill */}
         <nav className="nav-links">
           <a href="#home" className="nav-item">Home</a>
           <a href="#about" className="nav-item">About</a>
           <a href="#projects" className="nav-item">Projects</a>
           <a href="#contact" className="nav-item">Contact</a>
+
+          <a href="#contact" className="nav-availability-pill" title="Candidate Availability Status">
+            <span className="nav-pulse-dot" />
+            <span>Open to Work</span>
+          </a>
         </nav>
 
         {/* Right Actions: Theme Toggle + Resume Button */}
@@ -52,17 +57,15 @@ export default function Navbar({ theme, toggleTheme }) {
             )}
           </button>
 
-          {/* Download Resume / CV */}
-          <a 
-            href={PROFILE.cvUrl} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="btn btn-primary btn-sm"
-            title="Download Official Resume PDF"
+          {/* View Official Resume / CV Modal */}
+          <button 
+            onClick={onOpenCv}
+            className="btn btn-primary btn-sm resume-btn"
+            title="Preview Official 1-Page Resume (PDF)"
           >
             <FileText size={15} />
             <span>Resume</span>
-          </a>
+          </button>
 
           {/* Mobile Menu Button */}
           <button 
@@ -82,16 +85,15 @@ export default function Navbar({ theme, toggleTheme }) {
           <a href="#about" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-item">About Me</a>
           <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-item">Featured Projects</a>
           <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-item">Contact</a>
-          <a 
-            href={PROFILE.cvUrl} 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          
+          <button 
+            onClick={() => { setMobileMenuOpen(false); onOpenCv(); }} 
             className="btn btn-primary btn-sm"
-            style={{ marginTop: '8px' }}
+            style={{ marginTop: '8px', width: '100%', justifyContent: 'center' }}
           >
             <FileText size={16} />
-            <span>Download Resume PDF</span>
-          </a>
+            <span>View Resume PDF</span>
+          </button>
         </div>
       )}
 
@@ -101,24 +103,27 @@ export default function Navbar({ theme, toggleTheme }) {
           top: 0;
           left: 0;
           right: 0;
-          z-index: 1000;
-          padding: 18px 0;
-          transition: all 0.3s ease;
+          z-index: 999;
+          height: 72px;
+          display: flex;
+          align-items: center;
+          transition: background-color 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+          border-bottom: 1px solid transparent;
         }
 
         .navbar-scrolled {
-          padding: 12px 0;
-          background: var(--bg-nav);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
+          background-color: var(--bg-nav);
           border-bottom: 1px solid var(--border-subtle);
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          height: 64px;
         }
 
         .navbar-container {
           display: flex;
           align-items: center;
           justify-content: space-between;
+          width: 100%;
         }
 
         .navbar-brand {
@@ -129,11 +134,11 @@ export default function Navbar({ theme, toggleTheme }) {
         }
 
         .brand-icon {
-          width: 36px;
-          height: 36px;
+          width: 32px;
+          height: 32px;
           border-radius: var(--radius-sm);
-          background: rgba(14, 165, 233, 0.1);
-          border: 1px solid rgba(14, 165, 233, 0.25);
+          background: var(--badge-bg);
+          border: 1px solid var(--border-subtle);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -146,52 +151,71 @@ export default function Navbar({ theme, toggleTheme }) {
 
         .brand-name {
           font-family: var(--font-heading);
-          font-weight: 800;
           font-size: 1.05rem;
+          font-weight: 800;
           color: var(--text-primary);
-          letter-spacing: -0.02em;
+          line-height: 1.1;
         }
 
         .brand-role {
           font-family: var(--font-mono);
-          font-size: 0.72rem;
-          color: var(--accent-cyan);
+          font-size: 0.68rem;
+          color: var(--text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
         }
 
         .nav-links {
           display: flex;
           align-items: center;
-          gap: 32px;
+          gap: 22px;
         }
 
         .nav-item {
-          font-family: var(--font-heading);
-          font-size: 0.94rem;
-          font-weight: 600;
+          font-size: 0.92rem;
+          font-weight: 500;
           color: var(--text-secondary);
           text-decoration: none;
           transition: color 0.2s ease;
-          position: relative;
         }
 
         .nav-item:hover {
-          color: var(--text-primary);
+          color: var(--accent-cyan);
         }
 
-        .nav-item::after {
-          content: '';
-          position: absolute;
-          bottom: -4px;
-          left: 0;
-          width: 0;
-          height: 2px;
-          background: var(--gradient-brand);
-          transition: width 0.25s ease;
-          border-radius: 2px;
+        .nav-availability-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 4px 10px;
+          border-radius: var(--radius-full);
+          font-size: 0.74rem;
+          font-weight: 700;
+          font-family: var(--font-mono);
+          background: rgba(16, 185, 129, 0.1);
+          border: 1px solid rgba(16, 185, 129, 0.35);
+          color: var(--accent-emerald);
+          text-decoration: none;
+          transition: all 0.2s ease;
         }
 
-        .nav-item:hover::after {
-          width: 100%;
+        .nav-availability-pill:hover {
+          background: rgba(16, 185, 129, 0.2);
+          transform: scale(1.02);
+        }
+
+        .nav-pulse-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: var(--accent-emerald);
+          box-shadow: 0 0 6px var(--accent-emerald);
+          animation: navPulse 1.6s infinite;
+        }
+
+        @keyframes navPulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(1.3); }
         }
 
         .navbar-actions {
@@ -203,7 +227,7 @@ export default function Navbar({ theme, toggleTheme }) {
         .theme-toggle-btn {
           width: 38px;
           height: 38px;
-          border-radius: 50%;
+          border-radius: var(--radius-sm);
           background: var(--badge-bg);
           border: 1px solid var(--border-subtle);
           display: flex;
@@ -214,47 +238,55 @@ export default function Navbar({ theme, toggleTheme }) {
         }
 
         .theme-toggle-btn:hover {
-          transform: rotate(20deg) scale(1.06);
           border-color: var(--border-focus);
+          transform: translateY(-1px);
         }
 
-        .btn-sm {
-          padding: 8px 18px;
-          font-size: 0.88rem;
+        .resume-btn {
+          cursor: pointer;
         }
 
         .mobile-toggle-btn {
           display: none;
-          background: none;
+          background: transparent;
           border: none;
           color: var(--text-primary);
           cursor: pointer;
-          padding: 6px;
+          padding: 4px;
         }
 
         .mobile-menu {
-          position: absolute;
-          top: 100%;
-          left: 20px;
-          right: 20px;
+          position: fixed;
+          top: 72px;
+          left: 16px;
+          right: 16px;
+          background: var(--bg-card);
+          border: 1px solid var(--border-subtle);
+          border-radius: var(--radius-md);
           padding: 20px;
           display: flex;
           flex-direction: column;
-          gap: 14px;
-          border-radius: var(--radius-md);
-          margin-top: 10px;
+          gap: 12px;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+          z-index: 998;
+          backdrop-filter: blur(16px);
         }
 
         .mobile-nav-item {
+          padding: 10px 14px;
+          font-size: 0.95rem;
+          font-weight: 600;
           color: var(--text-primary);
           text-decoration: none;
-          font-size: 1rem;
-          font-weight: 600;
-          padding: 8px 0;
-          border-bottom: 1px solid var(--border-subtle);
+          border-radius: var(--radius-sm);
         }
 
-        @media (max-width: 860px) {
+        .mobile-nav-item:hover {
+          background: var(--badge-bg);
+          color: var(--accent-cyan);
+        }
+
+        @media (max-width: 768px) {
           .nav-links {
             display: none;
           }

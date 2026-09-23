@@ -5,12 +5,14 @@ import AboutMe from './components/AboutMe';
 import ProjectShowcase from './components/ProjectShowcase';
 import SkillsMatrix from './components/SkillsMatrix';
 import ContactFooter from './components/ContactFooter';
+import CvModal from './components/CvModal';
 
 export default function App() {
-  // Theme state: default to 'light' (matching nguyentrungnam.com default) or user preference
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'light';
+    return localStorage.getItem('theme') || 'dark';
   });
+
+  const [isCvOpen, setIsCvOpen] = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -21,16 +23,29 @@ export default function App() {
     setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   };
 
+  const handleOpenCv = () => setIsCvOpen(true);
+  const handleCloseCv = () => setIsCvOpen(false);
+
   return (
     <div className="portfolio-app">
-      <Navbar theme={theme} toggleTheme={toggleTheme} />
+      <Navbar 
+        theme={theme} 
+        toggleTheme={toggleTheme} 
+        onOpenCv={handleOpenCv}
+      />
       <main>
-        <Hero />
-        <AboutMe />
+        <Hero onOpenCv={handleOpenCv} />
+        <AboutMe onOpenCv={handleOpenCv} />
         <ProjectShowcase />
         <SkillsMatrix />
       </main>
-      <ContactFooter />
+      <ContactFooter onOpenCv={handleOpenCv} />
+      
+      {/* 1-Page Official ATS Resume Preview Modal */}
+      <CvModal 
+        isOpen={isCvOpen} 
+        onClose={handleCloseCv} 
+      />
     </div>
   );
 }

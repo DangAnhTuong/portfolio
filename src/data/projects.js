@@ -4,6 +4,7 @@ export const PROFILE = {
   brandLogo: "TUONG-DEV",
   title: "Full-Stack Software Engineer Intern | React, Node.js & Python FastAPI",
   targetRole: "Seeking Full-Stack Software Engineer Internship",
+  availability: "Available for Full-Stack Internships · HCMC / Remote",
   location: "Ho Chi Minh City, Vietnam",
   email: "danganhtuongg@gmail.com",
   phone: "0335847674",
@@ -46,12 +47,26 @@ export const PROJECTS = [
     timeline: "Jan. 2026 – Present",
     tagline: "Commercial-grade TOEIC exam ecosystem serving 18,200 ETS practice questions, 11,785 dictation audio sentences, and 83 SM-2 spaced repetition sets",
     description: "Developed an extensive TOEIC preparation platform serving 18,200 ETS practice questions with structured 4-part explanations, 11,785 dictation audio sentences with character-level text diffing, and 83 SM-2 spaced repetition sets. Built a 100vh single-frame ETS exam room featuring 200-question interactive bubble sheets, single-sentence waveform audio streaming, and sub-second auto-advancing input mechanics.",
+    image: "/projects/toeic_preview.svg",
+    metrics: [
+      "18,200 ETS Questions",
+      "11,785 Dictations",
+      "100vh Exam Simulator",
+      "100% Self-Hosted Media"
+    ],
     techStack: ["React 18", "Node.js (Express)", "MongoDB", "TailwindCSS", "Vite", "Web Audio API", "JWT Auth", "Nginx", "Linux VPS"],
     bullets: [
       "Learning Engine: Developed an extensive TOEIC preparation platform serving 18,200 ETS practice questions with structured 4-part explanations, 11,785 dictation audio sentences with character-level text diffing, and 83 SM-2 spaced repetition sets.",
       "Exam Simulator: Built a 100vh single-frame ETS exam room featuring 200-question interactive bubble sheets, single-sentence waveform audio streaming, and sub-second auto-advancing input mechanics.",
       "Study Notebook & Gamification: Implemented an automated mistake review notebook for targeted practice, paired with daily streak tracking, XP progression, and a real-time 1v1 multiplayer arena.",
       "Security, Payment & CI/CD: Integrated Google 1-Click OAuth 2.0, automated VietQR payment webhooks for instant 120-day VIP provisioning, and deployed automated 5-step CI/CD pipeline on Ubuntu Linux VPS with Nginx and SSL."
+    ],
+    architectureFlow: [
+      { step: "Client Layer", name: "React 18 + Vite 5", desc: "100vh No-Scroll Exam Room, Web Audio API waveform, SM-2 Engine" },
+      { step: "Reverse Proxy", name: "Nginx + SSL", desc: "Rate limiting, TLS 1.3, caching headers, local /media CDN proxy" },
+      { step: "Application", name: "Node.js Express API", desc: "JWT RBAC Middleware, Google OAuth2 verify, VietQR webhooks" },
+      { step: "Data Store", name: "MongoDB + Mongoose", desc: "18.2k ETS indexed items, user streaks, XP & mistake notebooks" },
+      { step: "DevOps & VPS", name: "Ubuntu Linux + PM2", desc: "Autonomous 5-step CI/CD pipeline, logrotate, self-hosted media" }
     ],
     architecture: {
       frontend: "React 18, Vite 5, TailwindCSS, Web Audio API, Native Speech API, Lucide React, Custom SM-2 Active Recall Engine",
@@ -76,12 +91,26 @@ export const PROJECTS = [
     timeline: "Jan. 2026 – Present",
     tagline: "Decoupled microservices architecture combining Node.js and Python FastAPI with real-time speech processing and pronunciation scoring",
     description: "Designed a multi-tier backend where Node.js manages user data, authentication, and chat history while Python FastAPI handles compute-heavy real-time speech processing. Integrated Deepgram STT and OpenAI API via WebSockets for low-latency voice evaluation (<1.5s) and automated pronunciation scoring.",
+    image: "/projects/english_preview.svg",
+    metrics: [
+      "Decoupled Microservices",
+      "<1.5s Voice Streaming",
+      "Gemini 3.6 Flash Engine",
+      "0ms Mindmap Render"
+    ],
     techStack: ["React 19", "Node.js (Express)", "Python (FastAPI)", "MongoDB", "Redis", "WebSockets", "Docker", "Nginx"],
     bullets: [
       "Decoupled Backend: Designed a multi-tier backend where Node.js manages user data, authentication, and chat history while Python FastAPI handles compute-heavy real-time speech processing.",
       "Real-Time Voice Streaming: Integrated Deepgram STT and OpenAI API via WebSockets for low-latency voice evaluation (<1.5s) and automated pronunciation scoring.",
       "Authentication & RBAC: Implemented secure JWT authentication with refresh token flow, Google OAuth2, and granular Role-Based Access Control (RBAC) for learners and admins.",
       "DevOps & Deployment: Containerized application stack using Docker Compose and Nginx Reverse Proxy on Linux VPS; optimized caching headers for static SPA delivery."
+    ],
+    architectureFlow: [
+      { step: "Client Layer", name: "React 19 + Ant Design", desc: "Speak.com UI layout, 0ms Optimistic Mindmap, WebSocket Voice recorder" },
+      { step: "API Gateway", name: "Nginx Reverse Proxy", desc: "Routes /api to Node.js (3001) and /py-api to FastAPI (8000)" },
+      { step: "Node Service", name: "Express Auth & Data", desc: "JWT tokens, user sessions, chat history, topic catalogs" },
+      { step: "Python AI", name: "FastAPI Engine", desc: "Asynchronous Gemini 3.6 Flash mindmap generation, speech evaluation" },
+      { step: "Data & Cache", name: "MongoDB + Redis", desc: "User profiles, conversation transcripts, token blacklist caching" }
     ],
     architecture: {
       frontend: "React 19, Vite, Web Audio API, WebSocket client, Ant Design",
@@ -104,11 +133,25 @@ export const PROJECTS = [
     timeline: "June 2025 – Aug. 2025",
     tagline: "Interactive 3D luxury hotel showcase and reservation system powered by Three.js WebGL with 60 FPS performance",
     description: "Built a luxury hotel showcase featuring interactive 3D WebGL rendering with Three.js, room showcases, dining menus, and tour booking reservation flows. Integrated Ant Design 5 components, custom CSS keyframe animations, and i18next for seamless English/Vietnamese language switching.",
+    image: "/projects/hotel_preview.svg",
+    metrics: [
+      "Three.js WebGL Engine",
+      "Stable 60 FPS Render",
+      "3D Room Explorer",
+      "i18next Bilingual UI"
+    ],
     techStack: ["React 19", "Three.js (@react-three/fiber)", "Ant Design 5", "HTML5", "CSS3", "i18next", "Netlify"],
     bullets: [
       "3D Interactive Graphics: Built a luxury hotel showcase featuring interactive 3D WebGL rendering with Three.js, room showcases, dining menus, and tour booking reservation flows.",
       "Localization & UI: Integrated Ant Design 5 components, custom CSS keyframe animations, and i18next for seamless English/Vietnamese language switching.",
       "Asset Optimization & CI/CD: Optimized 3D model geometry and asset loading to maintain steady 60 FPS rendering; set up automated continuous deployment via Netlify."
+    ],
+    architectureFlow: [
+      { step: "3D Rendering", name: "Three.js & Fiber", desc: "WebGL canvas, realistic lighting, camera orbit controls, shadow maps" },
+      { step: "UI Component", name: "Ant Design 5 + CSS", desc: "Modal reservation flows, responsive drawer menus, custom keyframes" },
+      { step: "Localization", name: "i18next Engine", desc: "Instant EN/VI language switching without full page reloads" },
+      { step: "Asset Engine", name: "GLTF / Draco Loader", desc: "Optimized 3D geometry compression for instant mobile loading" },
+      { step: "Deployment", name: "Netlify Edge CI/CD", desc: "Continuous automated deployment, global CDN asset caching" }
     ],
     architecture: {
       core: "React 19, Three.js, @react-three/fiber, @react-three/drei",
@@ -131,12 +174,26 @@ export const PROJECTS = [
     timeline: "2025",
     tagline: "High-concurrency ticket distribution platform with distributed locking and queue management",
     description: "Engineered a robust event ticketing infrastructure designed to prevent race conditions during high-demand concert ticket sales using Redis Distributed Locks and BullMQ job queues.",
+    image: "/projects/tickethub_preview.svg",
+    metrics: [
+      "Redis Distributed Locks",
+      "BullMQ Queue Engine",
+      "P99 1.82ms Lock Time",
+      "Zero Race Conditions"
+    ],
     techStack: ["Next.js 19", "NestJS", "TypeScript", "PostgreSQL", "Redis", "BullMQ", "Prisma ORM", "Docker Compose"],
     bullets: [
       "High Concurrency Engine: Solved ticket race conditions using Redis Distributed Lock mechanisms.",
       "Queue Architecture: Built BullMQ job queues to smooth out thousand-request traffic spikes without server crashes.",
       "Enterprise Architecture: Decoupled NestJS backend with Prisma ORM, PostgreSQL, and strict RBAC authorization.",
       "Full Containerization: Shipped complete multi-container Docker Compose setup ready for cloud or VPS."
+    ],
+    architectureFlow: [
+      { step: "Frontend App", name: "Next.js 19 TypeScript", desc: "Server-side rendering, real-time seat reservation map, TailwindCSS" },
+      { step: "Backend API", name: "NestJS Modular", desc: "RESTful endpoints, Swagger OpenAPI docs, JWT RBAC security guards" },
+      { step: "Distributed Lock", name: "Redis Mutex (Redlock)", desc: "Guarantees single seat acquisition during simultaneous checkouts" },
+      { step: "Job Queue", name: "BullMQ Asynchronous", desc: "Buffers ticket payment processing, avoids database lock contention" },
+      { step: "Persistence", name: "PostgreSQL + Prisma", desc: "ACID transactional order records, relational event schema" }
     ],
     architecture: {
       frontend: "Next.js 19 (TypeScript), Framer Motion, Lucide Icons",
