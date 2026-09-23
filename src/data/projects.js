@@ -10,7 +10,7 @@ export const PROFILE = {
   phone: "0335847674",
   github: "https://github.com/DangAnhTuong",
   githubUsername: "DangAnhTuong",
-  linkedin: "https://www.linkedin.com/in/đặng-anh-tường-726574361?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
+  linkedin: "https://www.linkedin.com/in/%C4%91%E1%BA%B7ng-anh-t%C6%B0%E1%BB%9Dng-726574361",
   cvUrl: "/Dang_Anh_Tuong_CV.pdf",
   summary: "Final-year Information Technology student at Thuyloi University (HCMC) seeking a Full-Stack Software Engineer Internship. Experienced in building and deploying production-grade web applications with React, Node.js, and Python FastAPI, augmented by modern AI-assisted engineering workflows (Cursor, Claude Code, Google Antigravity). Genuine passion for software engineering, highly coachable, and eager to learn from senior engineers through rigorous code reviews. Ready to dedicate 100% energy and commitment to write clean, reliable code and create meaningful value for the company.",
   education: {
