@@ -48,23 +48,36 @@ export default function ProjectShowcase() {
                 style={{ background: project.gradient }}
               />
 
-              {/* Visual Project Mockup Frame */}
+              {/* Visual Real Project Screenshot Frame */}
               {project.image && (
                 <div 
                   className="project-mockup-wrapper"
                   onClick={() => setSelectedProject(project)}
-                  title="Click to view full architecture & design"
+                  title="Click to view full architecture & real UI"
                 >
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
-                    className="project-mockup-img"
-                    loading="lazy"
-                  />
-                  <div className="mockup-hover-overlay">
-                    <span className="overlay-pill">
-                      <Eye size={14} /> Quick Architecture
+                  <div className="card-browser-bar">
+                    <div className="browser-dots">
+                      <span className="dot dot-red" />
+                      <span className="dot dot-yellow" />
+                      <span className="dot dot-green" />
+                    </div>
+                    <span className="browser-domain-text">
+                      {project.demo ? project.demo.replace('https://', '') : 'production.app'}
                     </span>
+                    <span className="browser-live-badge">REAL UI</span>
+                  </div>
+                  <div className="mockup-img-container">
+                    <img 
+                      src={project.image} 
+                      alt={project.title} 
+                      className="project-mockup-img"
+                      loading="lazy"
+                    />
+                    <div className="mockup-hover-overlay">
+                      <span className="overlay-pill">
+                        <Eye size={14} /> View Live UI &amp; Architecture
+                      </span>
+                    </div>
                   </div>
                 </div>
               )}
@@ -243,15 +256,67 @@ export default function ProjectShowcase() {
           width: 100%;
         }
 
-        /* Mockup Frame */
+        /* Real Mockup Frame */
         .project-mockup-wrapper {
           position: relative;
           width: 100%;
-          height: 250px;
           overflow: hidden;
           background: #090e17;
           border-bottom: 1px solid var(--border-subtle);
           cursor: pointer;
+        }
+
+        .card-browser-bar {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 8px 14px;
+          background: rgba(15, 23, 42, 0.95);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          font-family: var(--font-mono);
+          font-size: 0.72rem;
+        }
+
+        .browser-dots {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .dot {
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          display: inline-block;
+        }
+
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #f59e0b; }
+        .dot-green { background: #10b981; }
+
+        .browser-domain-text {
+          color: var(--text-muted);
+          font-weight: 500;
+          letter-spacing: 0.02em;
+        }
+
+        .browser-live-badge {
+          font-size: 0.65rem;
+          font-weight: 700;
+          padding: 2px 7px;
+          border-radius: 4px;
+          background: rgba(16, 185, 129, 0.15);
+          color: var(--accent-emerald);
+          border: 1px solid rgba(16, 185, 129, 0.3);
+          letter-spacing: 0.05em;
+        }
+
+        .mockup-img-container {
+          position: relative;
+          width: 100%;
+          height: 240px;
+          overflow: hidden;
+          background: #0b1120;
         }
 
         .project-mockup-img {
@@ -263,7 +328,7 @@ export default function ProjectShowcase() {
         }
 
         .project-card:hover .project-mockup-img {
-          transform: scale(1.03);
+          transform: scale(1.04);
         }
 
         .mockup-hover-overlay {

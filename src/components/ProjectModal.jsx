@@ -35,6 +35,39 @@ export default function ProjectModal({ project, onClose }) {
 
         {/* Body Content */}
         <div className="modal-body">
+          {/* Real Live Screenshot Preview Frame */}
+          {project.image && (
+            <div className="modal-screenshot-section">
+              <div className="modal-browser-bar">
+                <div className="browser-dots">
+                  <span className="dot dot-red" />
+                  <span className="dot dot-yellow" />
+                  <span className="dot dot-green" />
+                </div>
+                <div className="modal-browser-url">
+                  <span>{project.demo || 'https://danganhtuong.dev'}</span>
+                </div>
+                {project.demo && (
+                  <a 
+                    href={project.demo} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="modal-open-live-btn"
+                  >
+                    <ExternalLink size={12} /> Visit Live Production
+                  </a>
+                )}
+              </div>
+              <div className="modal-screenshot-container">
+                <img 
+                  src={project.image} 
+                  alt={project.title} 
+                  className="modal-screenshot-img" 
+                />
+              </div>
+            </div>
+          )}
+
           {/* Summary */}
           <div className="modal-section">
             <h4 className="modal-section-title">Overview &amp; Purpose</h4>
@@ -250,6 +283,96 @@ export default function ProjectModal({ project, onClose }) {
           display: flex;
           flex-direction: column;
           gap: 26px;
+        }
+
+        /* Modal Screenshot Section */
+        .modal-screenshot-section {
+          border-radius: var(--radius-md);
+          overflow: hidden;
+          border: 1px solid var(--border-subtle);
+          background: #090e17;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .modal-browser-bar {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 9px 16px;
+          background: rgba(15, 23, 42, 0.95);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          gap: 12px;
+        }
+
+        .browser-dots {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .dot {
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          display: inline-block;
+        }
+
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #f59e0b; }
+        .dot-green { background: #10b981; }
+
+        .modal-browser-url {
+          flex: 1;
+          max-width: 480px;
+          margin: 0 auto;
+          background: rgba(0, 0, 0, 0.3);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 4px;
+          padding: 3px 12px;
+          text-align: center;
+          font-family: var(--font-mono);
+          font-size: 0.76rem;
+          color: var(--text-muted);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .modal-open-live-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          font-family: var(--font-mono);
+          font-size: 0.74rem;
+          font-weight: 600;
+          color: var(--accent-cyan);
+          text-decoration: none;
+          padding: 4px 10px;
+          border-radius: 4px;
+          background: rgba(14, 165, 233, 0.1);
+          border: 1px solid rgba(14, 165, 233, 0.25);
+          transition: all 0.2s ease;
+        }
+
+        .modal-open-live-btn:hover {
+          background: var(--accent-cyan);
+          color: #ffffff;
+        }
+
+        .modal-screenshot-container {
+          position: relative;
+          width: 100%;
+          max-height: 380px;
+          overflow: hidden;
+          background: #0b1120;
+        }
+
+        .modal-screenshot-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
+          display: block;
         }
 
         .modal-section-title {

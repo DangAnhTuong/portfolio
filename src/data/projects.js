@@ -47,7 +47,7 @@ export const PROJECTS = [
     timeline: "Jan. 2026 – Present",
     tagline: "Commercial-grade TOEIC exam ecosystem serving 18,200 ETS practice questions, 11,785 dictation audio sentences, and 83 SM-2 spaced repetition sets",
     description: "Developed an extensive TOEIC preparation platform serving 18,200 ETS practice questions with structured 4-part explanations, 11,785 dictation audio sentences with character-level text diffing, and 83 SM-2 spaced repetition sets. Built a 100vh single-frame ETS exam room featuring 200-question interactive bubble sheets, single-sentence waveform audio streaming, and sub-second auto-advancing input mechanics.",
-    image: "/projects/toeic_preview.svg",
+    image: "/projects/toeic_real.webp",
     metrics: [
       "18,200 ETS Questions",
       "11,785 Dictations",
@@ -91,7 +91,7 @@ export const PROJECTS = [
     timeline: "Jan. 2026 – Present",
     tagline: "Decoupled microservices architecture combining Node.js and Python FastAPI with real-time speech processing and pronunciation scoring",
     description: "Designed a multi-tier backend where Node.js manages user data, authentication, and chat history while Python FastAPI handles compute-heavy real-time speech processing. Integrated Deepgram STT and OpenAI API via WebSockets for low-latency voice evaluation (<1.5s) and automated pronunciation scoring.",
-    image: "/projects/english_preview.svg",
+    image: "/projects/english_real.webp",
     metrics: [
       "Decoupled Microservices",
       "<1.5s Voice Streaming",
@@ -133,7 +133,7 @@ export const PROJECTS = [
     timeline: "June 2025 – Aug. 2025",
     tagline: "Interactive 3D luxury hotel showcase and reservation system powered by Three.js WebGL with 60 FPS performance",
     description: "Built a luxury hotel showcase featuring interactive 3D WebGL rendering with Three.js, room showcases, dining menus, and tour booking reservation flows. Integrated Ant Design 5 components, custom CSS keyframe animations, and i18next for seamless English/Vietnamese language switching.",
-    image: "/projects/hotel_preview.svg",
+    image: "/projects/hotel_real.webp",
     metrics: [
       "Three.js WebGL Engine",
       "Stable 60 FPS Render",
@@ -174,7 +174,7 @@ export const PROJECTS = [
     timeline: "2025",
     tagline: "High-concurrency ticket distribution platform with distributed locking and queue management",
     description: "Engineered a robust event ticketing infrastructure designed to prevent race conditions during high-demand concert ticket sales using Redis Distributed Locks and BullMQ job queues.",
-    image: "/projects/tickethub_preview.svg",
+    image: "/projects/tickethub_real.webp",
     metrics: [
       "Redis Distributed Locks",
       "BullMQ Queue Engine",
