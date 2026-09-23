@@ -158,7 +158,7 @@ export default function CvModal({ isOpen, onClose }) {
               >
                 <img 
                   src="/Dang_Anh_Tuong_CV.webp" 
-                  alt="Đặng Ánh Tường - Software Engineer Intern ATS Resume"
+                  alt="Đặng Anh Tường - Software Engineer Intern ATS Resume"
                   className="paper-sheet-img"
                   loading="eager"
                 />
