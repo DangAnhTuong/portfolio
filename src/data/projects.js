@@ -76,8 +76,7 @@ export const PROJECTS = [
     },
     github: "https://github.com/DangAnhTuong/tuong_tan_toeic",
     demo: "https://toeic.danganhtuong.dev",
-    isPrivate: true,
-    privateNotice: "Mã nguồn đang ở chế độ Private để bảo vệ tài nguyên đề thi ETS. Sẵn sàng mời làm Collaborator/Viewer cho Nhà tuyển dụng quan tâm.",
+    isPrivate: false,
     badgeColor: "#3b82f6",
     gradient: "linear-gradient(135deg, #1d4ed8 0%, #38bdf8 100%)"
   },
